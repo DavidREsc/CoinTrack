@@ -1,8 +1,9 @@
 CREATE DATABASE crypto_portfolio_tracker;
 \c crypto_portfolio_tracker;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users(
-    user_id SERIAL,
+    user_id UUID DEFAULT uuid_generate_v4(),
     user_email VARCHAR(255) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     verified BOOLEAN NOT NULL DEFAULT 'f',
@@ -12,7 +13,7 @@ CREATE TABLE users(
 
 CREATE TABLE portfolios(
     portfolio_id SERIAL,
-    user_id INTEGER NOT NULL,
+    user_id UUID NOT NULL,
     portfolio_name VARCHAR(255) NOT NULL,
     main BOOLEAN NOT NULL DEFAULT 'f',
     created_at TIMESTAMPTZ NOT NULL DEFAULT (now()),
@@ -23,12 +24,13 @@ CREATE TABLE portfolios(
 CREATE TYPE TRANSACTION AS ENUM ('buy', 'sell');
 
 CREATE TABLE transactions(
-    transaction_id BIGSERIAL,
+    transaction_id SERIAL,
     transaction_type TRANSACTION NOT NULL,
+    transaction_date TIMESTAMPTZ NOT NULL,
     portfolio_id INTEGER NOT NULL,
     coin_id VARCHAR(255) NOT NULL,
     coin_amount DOUBLE PRECISION NOT NULL,
-    coin_price INTEGER NOT NULL,
+    coin_price DOUBLE PRECISION NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT (now()),
     PRIMARY KEY (transaction_id),
     FOREIGN KEY (portfolio_id) REFERENCES portfolios(portfolio_id)
