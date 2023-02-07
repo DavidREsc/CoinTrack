@@ -87,11 +87,14 @@ exports.register = (0, asyncHandler_1.default)(function (req, res, next) { retur
                 return [4 /*yield*/, client.query('COMMIT')];
             case 8:
                 _a.sent();
+                console.log('Success');
                 client.release();
                 (0, sendJwtResponse_1.default)(newUser.rows[0], 201, res);
                 return [3 /*break*/, 11];
             case 9:
                 error_1 = _a.sent();
+                console.log(error_1);
+                console.log('fails');
                 return [4 /*yield*/, client.query('ROLLBACK')];
             case 10:
                 _a.sent();
