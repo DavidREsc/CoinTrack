@@ -30,7 +30,10 @@ router.post('/login',
 router.post('/logout', logout)
 router.post('/demoLogin', demoLogin)
 router.get('/verify', protect, (req: Request, res: Response) => {
-    res.status(200).send()
+    const resObj = {success: true, user: req.body.user.user_email}
+    console.log('verify')
+    console.log(resObj)
+    res.status(200).json(resObj)
 })
 
 export default router;

@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -35,14 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -51,7 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCoinHistory = exports.getCoin = exports.getCoins = void 0;
 var asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 var cache_1 = __importDefault(require("../cache"));
-exports.getCoins = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.getCoins = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var cachedCoins, apiRequests, i, data, response, i, responseJson;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -67,7 +63,7 @@ exports.getCoins = (0, asyncHandler_1.default)(function (req, res, next) { retur
                 apiRequests = [];
                 for (i = 0; i < 10; i++) {
                     // Push request promises to array
-                    apiRequests.push(fetch("https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=100&offset=".concat(i * 100), {
+                    apiRequests.push(fetch("https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=100&offset=" + i * 100, {
                         "method": "GET",
                         "headers": {
                             "x-rapidapi-host": "coinranking1.p.rapidapi.com",
@@ -89,7 +85,7 @@ exports.getCoins = (0, asyncHandler_1.default)(function (req, res, next) { retur
                 return [4 /*yield*/, response[i].json()];
             case 4:
                 responseJson = _a.sent();
-                data.coins = __spreadArray(__spreadArray([], data.coins, true), responseJson.data.coins, true);
+                data.coins = __spreadArray(__spreadArray([], data.coins), responseJson.data.coins);
                 if (i == 0)
                     data.stats = responseJson.data.stats;
                 _a.label = 5;
@@ -100,20 +96,20 @@ exports.getCoins = (0, asyncHandler_1.default)(function (req, res, next) { retur
                 // Cache coin data
                 cache_1.default.set('coins', JSON.stringify(data), 'EX', 180);
                 res.status(200).json({
-                    status: "success",
+                    success: true,
                     data: data
                 });
                 return [2 /*return*/];
         }
     });
 }); });
-exports.getCoin = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.getCoin = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var coinId, response, coinData;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 coinId = req.params.id;
-                return [4 /*yield*/, fetch("https://coinranking1.p.rapidapi.com/coin/".concat(coinId, "?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h"), {
+                return [4 /*yield*/, fetch("https://coinranking1.p.rapidapi.com/coin/" + coinId + "?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h", {
                         "method": "GET",
                         "headers": {
                             "x-rapidapi-host": "coinranking1.p.rapidapi.com",
@@ -126,20 +122,20 @@ exports.getCoin = (0, asyncHandler_1.default)(function (req, res, next) { return
             case 2:
                 coinData = _a.sent();
                 res.status(200).json({
-                    status: "success",
+                    success: true,
                     data: coinData
                 });
                 return [2 /*return*/];
         }
     });
 }); });
-exports.getCoinHistory = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.getCoinHistory = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, id, period, response, data;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = req.params, id = _a.id, period = _a.period;
-                return [4 /*yield*/, fetch("https://coinranking1.p.rapidapi.com/coin/".concat(id, "/history?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=").concat(period), {
+                return [4 /*yield*/, fetch("https://coinranking1.p.rapidapi.com/coin/" + id + "/history?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=" + period, {
                         "method": "GET",
                         "headers": {
                             "x-rapidapi-host": "coinranking1.p.rapidapi.com",

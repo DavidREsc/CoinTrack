@@ -4,8 +4,8 @@ import ErrorResponse from "../utils/errorResponse";
 
 // Error handling middleware
 const errorHandler: ErrorRequestHandler = (e, req, res, next) => {
-    console.log(chalk.red(e))
-    res.status(500).json({
+    console.log(chalk.red(e, e.statusCode))
+    res.status(e.statusCode || 500).json({
         success: false,
         error: e.message
     })

@@ -14,7 +14,7 @@ CREATE TABLE users(
 CREATE TABLE portfolios(
     portfolio_id SERIAL,
     user_id UUID NOT NULL,
-    portfolio_name VARCHAR(255) NOT NULL,
+    portfolio_name VARCHAR(33) NOT NULL,
     main BOOLEAN NOT NULL DEFAULT 'f',
     created_at TIMESTAMPTZ NOT NULL DEFAULT (now()),
     PRIMARY KEY (portfolio_id),
@@ -28,9 +28,9 @@ CREATE TABLE transactions(
     transaction_type TRANSACTION NOT NULL,
     transaction_date TIMESTAMPTZ NOT NULL,
     portfolio_id INTEGER NOT NULL,
-    coin_id VARCHAR(255) NOT NULL,
-    coin_amount DOUBLE PRECISION NOT NULL,
-    coin_price DOUBLE PRECISION NOT NULL,
+    coin_id VARCHAR NOT NULL,
+    coin_amount VARCHAR NOT NULL,
+    coin_price VARCHAR NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT (now()),
     PRIMARY KEY (transaction_id),
     FOREIGN KEY (portfolio_id) REFERENCES portfolios(portfolio_id)

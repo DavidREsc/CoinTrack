@@ -1,4 +1,4 @@
-@import './app.css';
+@import './vars.css';
 
 .auth-container {
     position: relative;
@@ -20,6 +20,10 @@
     right: 48%;
     transform: translateY(-50%);
 
+}
+
+.auth-container.right:before {
+    left: 48%;
 }
 
 .auth-form {
@@ -66,7 +70,7 @@
     font-size: 1.2em;
 }
 
-.left-panel {
+.panel {
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -75,16 +79,16 @@
     height: 100vh;
 }
 
-.left-panel p {
+.panel p {
     color: white;
     font-size: 1.5em;
 }
 
-.left-panel img {
+.panel img {
     width: 50%;
 }
 
-.left-panel-signup {
+.panel-signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -100,4 +104,185 @@
     margin-top: 1em;
     cursor: pointer;
     font-size: 1em;
+}
+
+@media only screen and (min-width: 320px) {
+    .auth-container {
+        flex-direction: column;
+        overflow: auto;
+    }
+    .auth-container.right {
+        flex-direction: column-reverse;
+    }
+
+    .auth-form {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10em;
+    }
+
+    .auth-input {
+        font-size: 1.7em;
+        width: 100%;
+    }
+
+    .auth-input-container {
+        width: 90%;
+    }
+
+    .auth-form p {
+        font-size: 1.2em;
+    }
+
+    .auth-form h2 {
+        font-size: 2em;
+    }
+
+    .auth-container:before {
+        display: none;
+    }
+
+    .panel img {
+        display: none;
+    }
+
+    .panel {
+        background-color: var(--color-primary);
+        height: 30vh;
+        width: 100%;
+        margin-bottom: 5em;
+    }
+
+    .auth-form label {
+        font-size: 1.5em;
+    }
+
+    .auth-btn {
+        font-size: 1.5em;
+        width: 100%;
+        padding: 0.8em;
+        border-radius: 30px;
+    }
+
+    .panel-signup {
+        margin-top: 20%;
+    }
+}
+
+@media only screen and (min-width: 480px) {
+    .panel {
+        height: 20%;
+    }
+    .panel-signup {
+        margin-top: 10%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .auth-container {
+        overflow: hidden;
+        flex-direction: row;
+    }
+    .auth-container.right {
+        flex-direction: row;
+    }
+    .auth-container:before {
+        display: block;
+        width: 6500px;
+        height: 6500px;
+    }
+    .panel {
+        background: none;
+        justify-content: space-evenly;
+        height: 100vh;
+    }
+    .panel img {
+        display: block;
+        width: 60%;
+    }
+    .auth-input-container {
+        width: 90%;   
+    }
+    .auth-form {
+        padding: 2em;
+    }
+    .panel-signup {
+        margin: 0;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .auth-container:before {
+        width: 4000px;
+        height: 4000px;
+    }
+    .panel img {
+        width: 50%;
+    }
+    .auth-input-container {
+        width: 75%;
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    .auth-container:before {
+        width: 5000px;
+        height: 5000px;
+    }
+
+    .auth-form p {
+        font-size: 1.4em;
+    }
+
+    .auth-form h2 {
+        font-size: 2.5em;
+    }
+    .auth-input {
+        font-size: 2em;
+    }
+    .auth-submit-btn {
+        font-size: 1.8em;
+    }
+    .auth-btn {
+        font-size: 1.5em;
+        width: 12em;
+        border-radius: 40px;
+    }
+    .panel p {
+        font-size: 1.7em;
+    }
+    .panel img {
+        width: 40%;
+    }
+    .auth-form{
+        width: 60%;
+        margin-right: 5em;
+    }
+    .auth-form.signup {
+        margin-right: 0;
+        margin-left: 5em;
+    }
+}
+@media only screen and (min-width: 3000px) {
+    .auth-container:before {
+        width: 12000px;
+        height: 12000px;
+
+    }
+    .auth-form{
+        width: 50%;
+        margin-right: 10em;
+    }
+    .auth-form.signup {
+        margin-right: 0;
+        margin-left: 10em;
+    }
+    .auth-btn {
+        font-size: 2em;
+        width: 12em;
+        border-radius: 40px;
+    }
+    .panel p {
+        font-size: 2em;
+    }
 }

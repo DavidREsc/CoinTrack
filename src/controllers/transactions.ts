@@ -1,6 +1,7 @@
 import { RequestHandler, Request } from "express";
 import asyncHandler from "../middleware/asyncHandler";
 import db from '../db'
+import { QueryResult } from "pg";
 
 interface IBody {
     user: {
@@ -19,17 +20,45 @@ interface ITransactionsRequest extends Request {
     body: IBody
 }
 
+interface ITransactionsData {
+    transaction_id: number;
+    portfolio_id: number;
+    transaction_type: string;
+    coin_id: string;
+    coin_price: string;
+    coin_amount: string;
+    transaction_date: Date
+}
+
+interface ITransactionsQuery extends QueryResult {
+    rows: ITransactionsData[]
+}
+
 export const getTransactions: RequestHandler = asyncHandler(async (req: ITransactionsRequest, res, next) => {
+    interface IData {
+        buyTransactions: ITransactionsData[];
+        sellTransactions: ITransactionsData[];
+    }
+
     const {user_id} = req.body.user
-    const transactions = await db.query('SELECT transaction_id, transactions.portfolio_id, transaction_type, coin_id, coin_price, coin_amount, transaction_date ' +
+    const buyTransactions: ITransactionsQuery = await db.query('SELECT transaction_id, transactions.portfolio_id, transaction_type, coin_id, coin_price, coin_amount, transaction_date ' +
         'FROM users JOIN portfolios ON portfolios.user_id = users.user_id ' +
         'JOIN transactions ON transactions.portfolio_id = portfolios.portfolio_id ' +
-        'WHERE users.user_id = $1 ORDER BY transaction_date', [user_id]
+        'WHERE users.user_id = $1 and transaction_type = $2 ORDER BY transaction_date', [user_id, 'buy']
     )
+    const sellTransactions: ITransactionsQuery = await db.query('SELECT transaction_id, transactions.portfolio_id, transaction_type, coin_id, coin_price, coin_amount, transaction_date ' +
+        'FROM users JOIN portfolios ON portfolios.user_id = users.user_id ' +
+        'JOIN transactions ON transactions.portfolio_id = portfolios.portfolio_id ' +
+        'WHERE users.user_id = $1 and transaction_type = $2 ORDER BY transaction_date', [user_id, 'sell']
+    )
+    const data: IData = {
+        buyTransactions: buyTransactions.rows,
+        sellTransactions: sellTransactions.rows
+    }
 
     res.status(200).json({
         success: true,
-        data: transactions.rows
+        data
     })
 })
 

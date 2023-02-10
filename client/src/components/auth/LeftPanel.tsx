@@ -6,9 +6,9 @@ interface LeftPanelProps {
 
 const LeftPanel: React.FC<LeftPanelProps> = (props) => {
   return (
-    <div className='left-panel'>
-			<div className='left-panel-signup'>
-				<p>Don't have an account?</p>
+    <div className='panel'>
+			<div className='panel-signup'>
+				<p>Don't have an account? </p>
 				<button 
 					className='auth-btn'
 					onClick={props.onBtnClick}

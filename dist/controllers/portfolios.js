@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePortfolio = exports.createPortfolio = exports.getPortfolios = void 0;
 var asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 var db_1 = __importDefault(require("../db"));
-exports.getPortfolios = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.getPortfolios = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var user_id, portfolios;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -59,7 +59,7 @@ exports.getPortfolios = (0, asyncHandler_1.default)(function (req, res, next) { 
         }
     });
 }); });
-exports.createPortfolio = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.createPortfolio = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var user_id, portfolio_name, portfolio;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -77,7 +77,7 @@ exports.createPortfolio = (0, asyncHandler_1.default)(function (req, res, next) 
         }
     });
 }); });
-exports.deletePortfolio = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.deletePortfolio = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var id, client, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {

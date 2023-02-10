@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -47,14 +47,14 @@ var sendJwtResponse_1 = __importDefault(require("../utils/sendJwtResponse"));
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var express_validator_1 = require("express-validator");
 var db_1 = __importDefault(require("../db"));
-exports.register = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.register = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, password, validationError, existingUser, hashedPassword, client, newUser, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 email = req.body.email;
                 password = req.body.password;
-                validationError = (0, express_validator_1.validationResult)(req);
+                validationError = express_validator_1.validationResult(req);
                 if (!validationError.isEmpty())
                     return [2 /*return*/, next(new errorResponse_1.default(400, validationError.array()[0].msg))
                         // Check for existing user
@@ -66,7 +66,7 @@ exports.register = (0, asyncHandler_1.default)(function (req, res, next) { retur
                     return [2 /*return*/, next(new errorResponse_1.default(409, "Email is already in use by another account"))
                         // Hash password and create a new user
                     ];
-                return [4 /*yield*/, (0, hashPassword_1.default)(password)];
+                return [4 /*yield*/, hashPassword_1.default(password)];
             case 2:
                 hashedPassword = _a.sent();
                 return [4 /*yield*/, db_1.default.connect()];
@@ -87,14 +87,11 @@ exports.register = (0, asyncHandler_1.default)(function (req, res, next) { retur
                 return [4 /*yield*/, client.query('COMMIT')];
             case 8:
                 _a.sent();
-                console.log('Success');
                 client.release();
-                (0, sendJwtResponse_1.default)(newUser.rows[0], 201, res);
+                sendJwtResponse_1.default(newUser.rows[0], 201, res);
                 return [3 /*break*/, 11];
             case 9:
                 error_1 = _a.sent();
-                console.log(error_1);
-                console.log('fails');
                 return [4 /*yield*/, client.query('ROLLBACK')];
             case 10:
                 _a.sent();
@@ -105,14 +102,14 @@ exports.register = (0, asyncHandler_1.default)(function (req, res, next) { retur
         }
     });
 }); });
-exports.login = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.login = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, password, validationError, user, verifiedPassword, _a, user_email, user_id;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 email = req.body.email;
                 password = req.body.password;
-                validationError = (0, express_validator_1.validationResult)(req);
+                validationError = express_validator_1.validationResult(req);
                 if (!validationError.isEmpty())
                     return [2 /*return*/, next(new errorResponse_1.default(400, validationError.array()[0].msg))
                         // Retrieve user
@@ -132,12 +129,12 @@ exports.login = (0, asyncHandler_1.default)(function (req, res, next) { return _
                         // Create a jwt token and send a response
                     ];
                 _a = user.rows[0], user_email = _a.user_email, user_id = _a.user_id;
-                (0, sendJwtResponse_1.default)({ user_email: user_email, user_id: user_id }, 200, res);
+                sendJwtResponse_1.default({ user_email: user_email, user_id: user_id }, 200, res);
                 return [2 /*return*/];
         }
     });
 }); });
-exports.logout = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.logout = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var token, blackListedToken;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -160,7 +157,7 @@ exports.logout = (0, asyncHandler_1.default)(function (req, res, next) { return 
         }
     });
 }); });
-exports.demoLogin = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.demoLogin = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, password, user, verifiedPassword, _a, user_email, user_id;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -182,7 +179,7 @@ exports.demoLogin = (0, asyncHandler_1.default)(function (req, res, next) { retu
                         // Create a jwt token and send a response
                     ];
                 _a = user.rows[0], user_email = _a.user_email, user_id = _a.user_id;
-                (0, sendJwtResponse_1.default)({ user_email: user_email, user_id: user_id }, 200, res);
+                sendJwtResponse_1.default({ user_email: user_email, user_id: user_id }, 200, res);
                 return [2 /*return*/];
         }
     });

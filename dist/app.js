@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -39,14 +35,14 @@ var coins_1 = __importDefault(require("./routes/coins"));
 var auth_1 = __importDefault(require("./routes/auth"));
 var portfolios_1 = __importDefault(require("./routes/portfolios"));
 var transactions_1 = __importDefault(require("./routes/transactions"));
-var app = (0, express_1.default)();
+var app = express_1.default();
 var PORT = Number(process.env.PORT) || 5001;
 // Request body parser
 app.use(express_1.default.json());
 // Cors
-app.use((0, cors_1.default)());
+app.use(cors_1.default());
 // Cookie parser
-app.use((0, cookie_parser_1.default)());
+app.use(cookie_parser_1.default());
 // Route handlers
 app.use('/api/v1/coins', coins_1.default);
 app.use('/api/v1/auth', auth_1.default);
@@ -64,5 +60,5 @@ app.get('/*', function (req, res) {
 });
 // Start server
 app.listen(PORT, function () {
-    console.log("Listening on port ".concat(PORT));
+    console.log("Listening on port " + PORT);
 });

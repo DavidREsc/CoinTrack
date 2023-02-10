@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -42,8 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTransactions = exports.deleteTransaction = exports.editTransaction = exports.createTransaction = exports.getTransactions = void 0;
 var asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 var db_1 = __importDefault(require("../db"));
-exports.getTransactions = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var user_id, transactions;
+exports.getTransactions = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var user_id, buyTransactions, sellTransactions, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -51,18 +51,28 @@ exports.getTransactions = (0, asyncHandler_1.default)(function (req, res, next) 
                 return [4 /*yield*/, db_1.default.query('SELECT transaction_id, transactions.portfolio_id, transaction_type, coin_id, coin_price, coin_amount, transaction_date ' +
                         'FROM users JOIN portfolios ON portfolios.user_id = users.user_id ' +
                         'JOIN transactions ON transactions.portfolio_id = portfolios.portfolio_id ' +
-                        'WHERE users.user_id = $1 ORDER BY transaction_date', [user_id])];
+                        'WHERE users.user_id = $1 and transaction_type = $2 ORDER BY transaction_date', [user_id, 'buy'])];
             case 1:
-                transactions = _a.sent();
+                buyTransactions = _a.sent();
+                return [4 /*yield*/, db_1.default.query('SELECT transaction_id, transactions.portfolio_id, transaction_type, coin_id, coin_price, coin_amount, transaction_date ' +
+                        'FROM users JOIN portfolios ON portfolios.user_id = users.user_id ' +
+                        'JOIN transactions ON transactions.portfolio_id = portfolios.portfolio_id ' +
+                        'WHERE users.user_id = $1 and transaction_type = $2 ORDER BY transaction_date', [user_id, 'sell'])];
+            case 2:
+                sellTransactions = _a.sent();
+                data = {
+                    buyTransactions: buyTransactions.rows,
+                    sellTransactions: sellTransactions.rows
+                };
                 res.status(200).json({
                     success: true,
-                    data: transactions.rows
+                    data: data
                 });
                 return [2 /*return*/];
         }
     });
 }); });
-exports.createTransaction = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.createTransaction = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, portfolio_id, coin_id, coin_amount, coin_price, transaction_date, transaction_type, transaction;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -80,7 +90,7 @@ exports.createTransaction = (0, asyncHandler_1.default)(function (req, res, next
         }
     });
 }); });
-exports.editTransaction = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.editTransaction = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, coin_amount, coin_price, transaction_date, transaction_type, id, transaction;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -99,7 +109,7 @@ exports.editTransaction = (0, asyncHandler_1.default)(function (req, res, next) 
         }
     });
 }); });
-exports.deleteTransaction = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.deleteTransaction = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var id;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -116,7 +126,7 @@ exports.deleteTransaction = (0, asyncHandler_1.default)(function (req, res, next
         }
     });
 }); });
-exports.deleteTransactions = (0, asyncHandler_1.default)(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+exports.deleteTransactions = asyncHandler_1.default(function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, portfolio_id, coin_id;
     return __generator(this, function (_b) {
         switch (_b.label) {

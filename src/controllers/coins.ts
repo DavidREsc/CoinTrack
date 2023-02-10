@@ -47,7 +47,7 @@ export const getCoins: RequestHandler = asyncHandler(async (req, res, next) => {
     cache.set('coins', JSON.stringify(data), 'EX', 180)
 
     res.status(200).json({
-        status: "success",
+        success: true,
         data
     })
 })
@@ -64,7 +64,7 @@ export const getCoin: RequestHandler = asyncHandler(async (req, res, next) => {
     })
     const coinData = await response.json()
     res.status(200).json({
-        status: "success",
+        success: true,
         data: coinData
     })
 })
