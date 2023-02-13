@@ -1,6 +1,6 @@
 import { ITransaction } from "../types"
 
-class Node {
+/*class Node {
     val: ITransaction
     next: Node | null
     constructor(val: ITransaction) {
@@ -140,4 +140,4 @@ class Map {
     }
 }
 
-export default Map
+export default Map*/
