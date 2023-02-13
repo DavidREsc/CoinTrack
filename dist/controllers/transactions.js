@@ -62,7 +62,8 @@ exports.getTransactions = asyncHandler_1.default(function (req, res, next) { ret
                 sellTransactions = _a.sent();
                 data = {
                     buyTransactions: buyTransactions.rows,
-                    sellTransactions: sellTransactions.rows
+                    sellTransactions: sellTransactions.rows,
+                    portfolios: req.body.portfolios || []
                 };
                 res.status(200).json({
                     success: true,

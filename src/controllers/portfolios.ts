@@ -2,12 +2,19 @@ import asyncHandler from "../middleware/asyncHandler";
 import db from '../db'
 import { RequestHandler, Request } from "express";
 
+interface IPortfolioData {
+    portfolio_name: string;
+    portfolio_id: number;
+    main: boolean;
+}
+
 interface IBody {
     user: {
         user_id: string;
         user_email: string;
     },
     portfolio_name: string;
+    portfolios: IPortfolioData[]
 }
 
 interface IPortfolioRequest extends Request {
@@ -17,11 +24,8 @@ interface IPortfolioRequest extends Request {
 export const getPortfolios: RequestHandler = asyncHandler(async (req: IPortfolioRequest, res, next) => {
     const {user_id} = req.body.user
     const portfolios = await db.query('SELECT portfolio_name, portfolio_id, main FROM portfolios WHERE user_id = $1', [user_id])
-
-    res.status(200).json({
-        success: true,
-        data: portfolios.rows
-    })
+    req.body.portfolios = portfolios.rows
+    next()
 })
 
 export const createPortfolio: RequestHandler = asyncHandler(async (req: IPortfolioRequest, res, next) => {

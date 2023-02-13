@@ -64,7 +64,7 @@ aside h3 {
 
 .logout-btn {
     position: absolute;
-    bottom: 2rem;
+    top: 25rem;
     width: 100%;
 }
 
@@ -97,4 +97,67 @@ aside h3 {
 
 .nav-links:hover span, .side-btn:hover span{
     margin-left: 1rem;
+}
+
+@media screen and (max-width: 1200px) {
+    aside .logo {
+        display: none
+    }
+
+    aside .sidebar h3 {
+        display: none;
+    }
+
+    aside .nav-links, .side-btn {
+        width: 5.6rem;
+    }
+
+    aside .logout-btn {
+        position: relative;
+        top: 0rem;
+        margin-top: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    aside {
+        position: fixed;
+
+        background: var(--color-white);
+        width: 18rem;
+        z-index: 3;
+        box-shadow: 1rem 3rem 4rem var(--color-light);
+        height: 100vh;
+        padding-right: var(--card-padding);
+        top: 0;
+        left: -100%;
+        animation: showSidebar 400ms ease forwards; 
+        display: none;       
+    }
+    @keyframes showSidebar {
+        to {
+            left: 0;
+        }
+    }
+    aside.active {
+        display: block;
+   }
+    aside .logo {
+        display: inline;
+        margin-left: 1rem;
+    }
+
+    aside .sidebar h3 {
+        display: inline;;
+    }
+
+    aside .nav-links, .side-btn {
+        width: 100%;
+    }
+
+    aside .close {
+        display: inline-block;
+        cursor: pointer;
+        font-size: 2rem;
+    }
 }

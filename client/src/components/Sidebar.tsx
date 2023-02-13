@@ -7,14 +7,20 @@ import { NavLink } from 'react-router-dom'
 import {BiLogOutCircle} from 'react-icons/bi'
 import '../styles/sidebar.css'
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+	active: boolean;
+	onHideSidebar: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = (props) => {
+	const {active, onHideSidebar} = props;
   return (
-    <aside>
+    <aside className={active ? 'active' : ''}>
 			<div className='top'>
 				<div className='logo'>
 					<img src={Logo}/>
 				</div>
-				<div className='close' id='close-btn'>
+				<div className='close' id='close-btn' onClick={onHideSidebar}>
 					<span className='react-icons'><MdClose/></span>
 				</div>
 			</div>

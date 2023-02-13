@@ -2,23 +2,22 @@ import { useEffect, useState } from "react";
 import axios from 'redaxios'
 import { IError} from "../types";
 
-interface IFetchResponse {
+interface IFetchResponse<T> {
     data: {
         success: boolean;
-        data: unknown
+        data: T | undefined
     }
 }
 
-const useFetch = (url: string) => {
-    const [data, setData] = useState<unknown>(null)
+function useFetch<T = unknown>(url: string) {
+    const [data, setData] = useState<T | undefined>()
     const [error, setError] = useState<string>("")
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setLoading(true)
-                const response: IFetchResponse = await axios.get(url)
+                const response: IFetchResponse<T> = await axios.get(url)
                 setData(response.data.data)
             } catch (error) {
                 setError((error as IError).data.error)

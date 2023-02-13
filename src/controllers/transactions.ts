@@ -14,12 +14,11 @@ interface IBody {
     coin_price: number;
     transaction_type: string;
     transaction_date: Date;
+    portfolios?: IPortfolioData[]
 }
-
 interface ITransactionsRequest extends Request {
     body: IBody
 }
-
 interface ITransactionsData {
     transaction_id: number;
     portfolio_id: number;
@@ -29,7 +28,11 @@ interface ITransactionsData {
     coin_amount: string;
     transaction_date: Date
 }
-
+interface IPortfolioData {
+    portfolio_name: string;
+    portfolio_id: number;
+    main: boolean;
+}
 interface ITransactionsQuery extends QueryResult {
     rows: ITransactionsData[]
 }
@@ -38,6 +41,7 @@ export const getTransactions: RequestHandler = asyncHandler(async (req: ITransac
     interface IData {
         buyTransactions: ITransactionsData[];
         sellTransactions: ITransactionsData[];
+        portfolios: IPortfolioData[]
     }
 
     const {user_id} = req.body.user
@@ -53,7 +57,8 @@ export const getTransactions: RequestHandler = asyncHandler(async (req: ITransac
     )
     const data: IData = {
         buyTransactions: buyTransactions.rows,
-        sellTransactions: sellTransactions.rows
+        sellTransactions: sellTransactions.rows,
+        portfolios: req.body.portfolios || []
     }
 
     res.status(200).json({

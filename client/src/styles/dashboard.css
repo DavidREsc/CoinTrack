@@ -6,4 +6,29 @@
     margin: 0 auto;
     gap: 1.8rem;
     grid-template-columns: 14rem auto 18rem;
+    margin-top: 4rem;
+}
+
+main {
+    margin-top: 1.4rem;
+}
+
+@media only screen and (min-width: 2560px) {
+    .dashboard-container {
+        grid-template-columns: 20rem auto 20rem;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .dashboard-container {
+        width: 94%;
+        grid-template-columns: 7rem auto 16rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
 }

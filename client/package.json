@@ -10,7 +10,11 @@
     "dev-exposed": "vite --host"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@hookform/resolvers": "^2.9.10",
+    "@mui/material": "^5.11.8",
+    "decimal.js": "^10.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.1",

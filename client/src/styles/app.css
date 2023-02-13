@@ -4,9 +4,7 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
-    outline: 0;
-    appearance: none;
+    padding: 0; 
     border: 0;
     text-decoration: none;
     list-style: none;
@@ -24,6 +22,7 @@ body {
     background: var(--color-background);
     user-select: none;
     overflow-x: hidden;
+    color: var(--color-dark);
 }
 
 a {

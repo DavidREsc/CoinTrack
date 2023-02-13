@@ -1,0 +1,79 @@
+.portfolio-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6rem;
+}
+
+.portfolio-metrics > div {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.portfolio-metrics > div:hover {
+    box-shadow: none;
+}
+
+.portfolio-metrics > div span {
+    display: inline-block;
+    height: 3.5rem;
+    width: 3.5rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 2rem;
+    background: var(--color-primary);
+}
+
+.portfolio-metrics > div.total-sold span {
+    background: var(--color-danger)
+}
+
+.portfolio-metrics > div.capital-gains span {
+    background: var(--color-success)
+}
+
+.portfolio-metrics > div .middle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.portfolio-metrics h3 {
+    margin: 1rem 0 0rem;
+    font-size: 1rem;
+}
+
+.portfolio-metrics .total-profit-margin {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: flex-end;
+    margin-bottom: 0.4rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .portfolio-metrics {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        row-gap: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        margin-top: 8rem;
+        padding: 0 1rem;
+    }
+    .portfolio-metrics {
+        grid-template-columns: 1fr;
+        gap: 0rem;
+        row-gap: 0;
+    }
+}

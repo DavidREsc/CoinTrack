@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import useAuth from './hooks/useAuth'
 import { IError } from './types'
 import Analytics from './components/analytics/Analytics'
-import Portfolio from './components/portfolio/Portfolio'
+import Portfolios from './components/portfolio/Portfolios'
 import Browse from './components/browse/Browse'
 
 
@@ -48,7 +48,7 @@ const App: React.FC = () => {
                 <Route path='sign-up' element={<Signup onUser={handleUser}/>} />
                 <Route element={<ProtectedRoute user={user}/>}>
                     <Route path='dashboard' element={<Dashboard />}>
-                        <Route path='portfolio' element={<Portfolio />}/>
+                        <Route path='portfolio' element={<Portfolios />}/>
                         <Route path='analytics' element={<Analytics />}/>
                         <Route path='browse' element={<Browse />}/>
                     </Route>

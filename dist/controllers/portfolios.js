@@ -51,10 +51,8 @@ exports.getPortfolios = asyncHandler_1.default(function (req, res, next) { retur
                 return [4 /*yield*/, db_1.default.query('SELECT portfolio_name, portfolio_id, main FROM portfolios WHERE user_id = $1', [user_id])];
             case 1:
                 portfolios = _a.sent();
-                res.status(200).json({
-                    success: true,
-                    data: portfolios.rows
-                });
+                req.body.portfolios = portfolios.rows;
+                next();
                 return [2 /*return*/];
         }
     });
