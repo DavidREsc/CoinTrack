@@ -35,12 +35,12 @@ app.use(errorHandler)
 
 // Serve build files if in production mode
 if (process.env.NODE_ENV === 'production') {
-    app.use(Express.static(path.join(__dirname, '..client/dist')))
+    app.use(Express.static(path.join(__dirname, '../client/dist')))
 }
 
 // Catch route
 app.get('/*', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, '..client/dist/index.html'))
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'))
 })
 
 // Start server
