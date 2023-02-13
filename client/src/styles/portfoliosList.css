@@ -91,6 +91,12 @@
     background-color: var(--color-info-light);
 }
 
+@media screen and (max-width: 1200px) {
+    .portfolio-list .item, .add-item {
+        width: 11rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .portfolios-list-container {
         width: 94%;

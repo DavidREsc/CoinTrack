@@ -147,13 +147,17 @@
     .add-tnx {
         margin-left: 1rem;
     }
+    .portfolio-assets table thead tr th:nth-child(3) {
+        display: none;
+    }
+    .portfolio-assets table tbody tr td:nth-child(3){
+        display: none;
+    }
+    .span-name {
+        min-width: 5rem;
+    }
     
-    .portfolio-assets table thead tr th:nth-child() {
-        display: none;
-    }
-    .portfolio-assets table tbody tr td:nth-child(){
-        display: none;
-    }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -161,10 +165,32 @@
         position: relative;
         margin: 3rem 0 0 0;
         width: 100%;
+        left: unset;
+        transform: unset;
     }
 
     .portfolio-assets table {
         width: 100%;
         margin: 0;
+        padding: 0;
     }
+    .portfolio-assets table thead tr th:nth-child(3) {
+        display: none;
+    }
+    .portfolio-assets table tbody tr td:nth-child(3){
+        display: none;
+    }
+    .span-name {
+        min-width: 5rem;
+    }
+    .portfolio-assets table p {
+        font-size: 0.5rem;
+    }
+    .portfolio-assets table th {
+        font-size: 0.5rem;
+    }
+    .span-actions button {
+        font-size: 0.8rem;
+    }
+    
 }
