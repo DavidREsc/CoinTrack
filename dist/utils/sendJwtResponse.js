@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var createJwt_1 = __importDefault(require("./createJwt"));
+const createJwt_1 = __importDefault(require("./createJwt"));
 // Creates jwt token, stores in cookie, and sends back a response
-var sendJwtResponse = function (user, statusCode, res) {
-    var CTtoken = createJwt_1.default(user);
-    var cookieOptions = {
+const sendJwtResponse = (user, statusCode, res) => {
+    const CTtoken = createJwt_1.default(user);
+    const cookieOptions = {
         expires: new Date(Date.now() + (5 * 60 * 60 * 1000)),
         httpOnly: true,
         secure: false

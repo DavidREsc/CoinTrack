@@ -22,21 +22,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var errorHandler_1 = __importDefault(require("./middleware/errorHandler"));
-var cors_1 = __importDefault(require("cors"));
-var cookie_parser_1 = __importDefault(require("cookie-parser"));
-var path_1 = __importDefault(require("path"));
+const express_1 = __importDefault(require("express"));
+const errorHandler_1 = __importDefault(require("./middleware/errorHandler"));
+const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const path_1 = __importDefault(require("path"));
 // Load environment variables
-var dotenv = __importStar(require("dotenv"));
+const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 // Import routes
-var coins_1 = __importDefault(require("./routes/coins"));
-var auth_1 = __importDefault(require("./routes/auth"));
-var portfolios_1 = __importDefault(require("./routes/portfolios"));
-var transactions_1 = __importDefault(require("./routes/transactions"));
-var app = express_1.default();
-var PORT = Number(process.env.PORT) || 5001;
+const coins_1 = __importDefault(require("./routes/coins"));
+const auth_1 = __importDefault(require("./routes/auth"));
+const portfolios_1 = __importDefault(require("./routes/portfolios"));
+const transactions_1 = __importDefault(require("./routes/transactions"));
+const app = express_1.default();
+const PORT = Number(process.env.PORT) || 5001;
 // Request body parser
 app.use(express_1.default.json());
 // Cors
@@ -52,13 +52,13 @@ app.use('/api/v1/transactions', transactions_1.default);
 app.use(errorHandler_1.default);
 // Serve build files if in production mode
 if (process.env.NODE_ENV === 'production') {
-    app.use(express_1.default.static(path_1.default.join(__dirname, 'client/dist')));
+    app.use(express_1.default.static(path_1.default.join(__dirname, '../client/dist')));
 }
 // Catch route
-app.get('/*', function (req, res) {
-    res.sendFile('/client/dist/index.html', { root: __dirname });
+app.get('/*', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../client/dist/index.html'));
 });
 // Start server
-app.listen(PORT, function () {
-    console.log("Listening on port " + PORT);
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
 });
