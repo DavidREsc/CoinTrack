@@ -52,11 +52,11 @@ app.use('/api/v1/transactions', transactions_1.default);
 app.use(errorHandler_1.default);
 // Serve build files if in production mode
 if (process.env.NODE_ENV === 'production') {
-    app.use(express_1.default.static(path_1.default.join(__dirname, 'client/build')));
+    app.use(express_1.default.static(path_1.default.join(__dirname, 'client/dist')));
 }
 // Catch route
 app.get('/*', function (req, res) {
-    res.sendFile('/client/build/index.html', { root: __dirname });
+    res.sendFile('/client/dist/index.html', { root: __dirname });
 });
 // Start server
 app.listen(PORT, function () {
