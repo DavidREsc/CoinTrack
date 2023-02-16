@@ -217,3 +217,31 @@
     }
 }
 
+@media screen and (min-width: 2560px) {
+    .add-tnx {
+        padding: 0.8rem; 
+        width: 10rem;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 3000px) {
+    .portfolio-assets table p {
+        font-size: 1.25rem;
+    }
+    .portfolio-assets table th {
+        font-size: 1.25rem;
+    }
+    .remove, .more {
+        font-size: 1.8rem;
+    }
+
+    .span-name img {
+        width: 2rem;
+    }
+    .add-tnx {
+        padding: 0.9rem; 
+        width: 10rem;
+        font-size: 1.15rem;
+    }
+}

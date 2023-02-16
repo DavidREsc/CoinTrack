@@ -94,7 +94,6 @@ export const updatePortfolioObj = (pfl: IPortfolio, tnx: ITransaction, coinMap: 
     if (tnx.transaction_type === 'buy') {
         mergeTransactionsWithCoinData([tnx], coinMap)
         new_pfl_tnx = [...pfl.buy_tnx, ...[tnx]]
-        console.log(new_pfl_tnx)
         const {totalProfit, totalHoldings, totalProfitMargin, totalAmountSold} = 
             calculateMetrics(new_pfl_tnx)
         const merged_tnx = mergeTransactions(new_pfl_tnx)
@@ -105,4 +104,18 @@ export const updatePortfolioObj = (pfl: IPortfolio, tnx: ITransaction, coinMap: 
     return createPortfolioObject(pfl.id, pfl.buy_tnx, new_pfl_tnx,
         pfl.mergedTransactions, pfl.stats.total_profit, pfl.stats.total_holdings,
         pfl.stats.total_profit_margin, pfl.stats.total_amount_sold)
+}
+
+export const updatePflObjDeleteAsset = (pfl: IPortfolio, coin_id: string) => {
+    const new_pfl_buy_tnx = pfl.buy_tnx.filter(t => {
+        return t.coin_id !== coin_id
+    })
+    const new_pfl_sell_tnx = pfl.sell_tnx.filter(t => {
+        return t.coin_id !== coin_id
+    })
+    const {totalProfit, totalHoldings, totalProfitMargin, totalAmountSold} = 
+    calculateMetrics(new_pfl_buy_tnx)
+    const merged_tnx = mergeTransactions(new_pfl_buy_tnx)
+    return createPortfolioObject(pfl.id, new_pfl_buy_tnx, new_pfl_sell_tnx,
+        merged_tnx, totalProfit, totalHoldings, totalProfitMargin, totalAmountSold)
 }

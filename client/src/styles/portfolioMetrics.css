@@ -76,5 +76,14 @@
         gap: 0rem;
         row-gap: 0;
     }
+}
 
+@media screen and (min-width: 3000px) {
+    .portfolio-metrics {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .portfolio-metrics h3 {
+        font-size: 1.2rem;
+    }
+    .portfolio-metrics h1 {}
 }

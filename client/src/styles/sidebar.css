@@ -161,3 +161,9 @@ aside h3 {
         font-size: 2rem;
     }
 }
+
+@media screen and (min-width: 3000px) {
+    aside .sidebar h3 {
+        font-size: 1.3rem;
+    }
+}

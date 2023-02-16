@@ -20,7 +20,7 @@ const CoinScroll: React.FC<CoinScrollProps> = (props) => {
                     return (
                         <li key={idx}>
                             <button onClick={() => onSelectCoin(coin.uuid)}>
-                                <img src={coin.iconUrl} style={{width: '1rem'}}/>
+                                <img src={coin.iconUrl} />
                                 <p>{coin.name} <b>{coin.symbol.toUpperCase()}</b></p>
                             </button>
                         </li>

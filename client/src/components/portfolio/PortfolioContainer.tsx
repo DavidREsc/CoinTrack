@@ -10,8 +10,9 @@ import RemoveModal from "../forms/RemoveModal"
 
 interface PflContainerProps {
     portfolio: IPortfolio
-    onAddTransaction: (data: TnxData, coin_id: string, portfolio_id: number,
+    onAddTransaction: (data: TnxData, coin_id: string,
         cb: (e: IError | undefined) => void) => void;
+    onRemoveAsset: (coin_id: string, cb: (e: IError | undefined) => void) => void
 }
 
 const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
@@ -20,23 +21,30 @@ const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
     const [search, setSearch] = useState<string>("")
     const [selectedCoin, setSelectedCoin] = useState<ICoin>()
 
-    const {portfolio, onAddTransaction} = props
+    const {portfolio, onAddTransaction, onRemoveAsset} = props
     const {open: addNew, handleOpen: openAddNew, handleClose: closeAddNew} = useModal()
     const {open: remove, handleOpen: openRemove, handleClose: closeRemove} = useModal()
     const {coinMap} = useCoinsContext()
 
     const handleAddTnx = (data: TnxData) => {
         setLoading(true)
-        onAddTransaction(data, selectedCoin!.uuid, portfolio.id, (e) => {
-            setLoading(false)
+        onAddTransaction(data, selectedCoin!.uuid, (e) => {
             if (!e) {
                 closeAddNew()
                 setSelectedCoin(undefined)
             }
+            setLoading(false)
         })  
     }
     const handleDeleteAsset = () => {
-        console.log(selectedCoin!.uuid)
+        setLoading(true)
+        onRemoveAsset(selectedCoin!.uuid, (e) => {
+            if (!e) {
+                closeRemove()
+                setSelectedCoin(undefined)
+            }
+            setLoading(false)
+        })
     }
 
     // Handles search bar changes in the add tnx modal

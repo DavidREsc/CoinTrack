@@ -109,3 +109,19 @@
         width: 100%;
     }
 }
+
+@media screen and (min-width: 3000px) {
+    .portfolio-list .item div p {
+        font-size: 1.2rem;
+    }
+
+    .add-item h3 {
+        font-size: 1.2rem;
+    }
+    .add-item div span {
+        font-size: 1.5rem;
+    }
+    .portfolio-list .item {
+        margin-bottom: 1rem;
+    }
+}

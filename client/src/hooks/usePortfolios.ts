@@ -3,8 +3,14 @@ import axios from 'redaxios'
 
 interface AddTnxRes {
     data: {
-        success: true;
+        success: boolean;
         data: ITransaction;
+    }
+}
+interface RemoveAssetRes {
+    data: {
+        success: boolean,
+        data: {}
     }
 }
 
@@ -26,7 +32,21 @@ const usePortfolio = () => {
             .catch((e: IError) => reject(e))
         })
     }
-    return {useAddTransaction}
+    const useRemoveAsset = (coin_id: string, portfolio_id: number) => {
+        return new Promise<{}>((resolve, reject) => {
+            axios.delete('/api/v1/transactions', {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+                data: {
+                    coin_id,
+                    portfolio_id
+                }
+            })
+            .then((response: RemoveAssetRes) => resolve(response.data.data))
+            .catch((error: IError) => reject(error))
+        })
+    }
+    return {useAddTransaction, useRemoveAsset}
 }
 
 export default usePortfolio;
