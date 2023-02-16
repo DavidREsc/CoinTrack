@@ -100,3 +100,10 @@ export interface IPortfoliosData {
     sellTransactions: ITransaction[];
     portfolios: IPortfolioData[]
 }
+
+export interface TnxData {
+	transaction_type: string;
+	transaction_date: Date;
+    coin_amount: string;
+    coin_price: string;
+}

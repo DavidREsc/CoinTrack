@@ -4,7 +4,7 @@
 
 .portfolio-list {
     margin-top: 1rem;
-
+    width: 100%;
 }
 
 .portfolio-list h2 {
@@ -93,7 +93,10 @@
 
 @media screen and (max-width: 1200px) {
     .portfolio-list .item, .add-item {
-        width: 11rem;
+        width: 100%;
+    }
+    .portfolios-list-container {
+        width: 9rem;
     }
 }
 

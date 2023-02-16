@@ -41,7 +41,7 @@ exports.createTransaction = asyncHandler_1.default((req, res, next) => __awaiter
         'VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [portfolio_id, coin_id, coin_amount, coin_price, transaction_date, transaction_type]);
     res.status(201).json({
         success: true,
-        data: transaction.rows
+        data: transaction.rows[0]
     });
 }));
 exports.editTransaction = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,7 +51,7 @@ exports.editTransaction = asyncHandler_1.default((req, res, next) => __awaiter(v
         '= ($1, $2, $3, $4) WHERE transaction_id = $5 RETURNING *', [coin_amount, coin_price, transaction_date, transaction_type, id]);
     res.status(200).json({
         success: true,
-        data: transaction.rows
+        data: transaction.rows[0]
     });
 }));
 exports.deleteTransaction = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -59,7 +59,7 @@ exports.deleteTransaction = asyncHandler_1.default((req, res, next) => __awaiter
     yield db_1.default.query('DELETE FROM transactions WHERE transaction_id = $1', [id]);
     res.status(200).json({
         success: true,
-        data: []
+        data: {}
     });
 }));
 exports.deleteTransactions = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,6 +67,6 @@ exports.deleteTransactions = asyncHandler_1.default((req, res, next) => __awaite
     yield db_1.default.query('DELETE FROM transactions WHERE portfolio_id = $1 AND coin_id = $2', [portfolio_id, coin_id]);
     res.status(200).json({
         sucess: true,
-        data: []
+        data: {}
     });
 }));

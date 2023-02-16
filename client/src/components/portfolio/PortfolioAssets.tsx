@@ -4,19 +4,19 @@ import {CgMoreVerticalO} from 'react-icons/cg'
 import {RiDeleteBack2Line} from 'react-icons/ri'
 import { ITransaction } from '../../types'
 import { formatValue, lessThan, getAbs } from '../../utils/calculations'
-import AddNewTnx from '../buttons/AddNewTnx'
 
 interface PflAssetsProps {
     transactions: ITransaction[]
+    openSelect: () => void
 }
 
 const PortfolioAssets: React.FC<PflAssetsProps> = (props) => {
-    const {transactions} = props
+    const {transactions, openSelect} = props
     return (
         <div className='portfolio-assets'>
             <div className='assets-top'>
                 <h2>Your Assets</h2>
-                <AddNewTnx />
+                <button onClick={openSelect} className='add-tnx'>Add New</button>
             </div>
             <table>
                 <thead>

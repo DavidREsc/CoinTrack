@@ -76,7 +76,7 @@ export const createTransaction: RequestHandler = asyncHandler(async (req: ITrans
     
     res.status(201).json({
         success: true,
-        data: transaction.rows
+        data: transaction.rows[0]
     })
 })
 
@@ -90,7 +90,7 @@ export const editTransaction: RequestHandler = asyncHandler(async (req: ITransac
     
     res.status(200).json({
         success: true,
-        data: transaction.rows
+        data: transaction.rows[0]
     })
 })
 
@@ -100,7 +100,7 @@ export const deleteTransaction: RequestHandler = asyncHandler(async (req: ITrans
 
     res.status(200).json({
         success: true,
-        data: []
+        data: {}
     })
 })
 
@@ -110,6 +110,6 @@ export const deleteTransactions: RequestHandler = asyncHandler(async (req: ITran
 
     res.status(200).json({
         sucess: true,
-        data: []
+        data: {}
     })
 })

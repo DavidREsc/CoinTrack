@@ -47,7 +47,7 @@ export const mergeTransactions = (transactions: ITransaction[]) => {
             found.coin_amount = Decimal.sum(found.coin_amount!, cur.coin_amount!).toFixed()
             found.initial_holdings! = Decimal.sum(found.initial_holdings!, cur.initial_holdings!).toFixed()
         }
-        else accumulator.push(cur)
+        else accumulator.push({...cur})
         return accumulator;
     }, []);
     mergedTransactions.forEach(t => {
@@ -87,4 +87,22 @@ export const initNewPortfolioObj = (data: IPortfoliosData, pfl_id: number, coinM
         merged_tnx, totalProfit, totalHoldings, totalProfitMargin, totalAmountSold)
 
     return newPortfolio
+}
+
+export const updatePortfolioObj = (pfl: IPortfolio, tnx: ITransaction, coinMap: ICoinMap) => {
+    let new_pfl_tnx;
+    if (tnx.transaction_type === 'buy') {
+        mergeTransactionsWithCoinData([tnx], coinMap)
+        new_pfl_tnx = [...pfl.buy_tnx, ...[tnx]]
+        console.log(new_pfl_tnx)
+        const {totalProfit, totalHoldings, totalProfitMargin, totalAmountSold} = 
+            calculateMetrics(new_pfl_tnx)
+        const merged_tnx = mergeTransactions(new_pfl_tnx)
+        return createPortfolioObject(pfl.id, new_pfl_tnx, pfl.sell_tnx,
+            merged_tnx, totalProfit, totalHoldings, totalProfitMargin, totalAmountSold)
+    }
+    else new_pfl_tnx = [...pfl.sell_tnx, ...[tnx]]
+    return createPortfolioObject(pfl.id, pfl.buy_tnx, new_pfl_tnx,
+        pfl.mergedTransactions, pfl.stats.total_profit, pfl.stats.total_holdings,
+        pfl.stats.total_profit_margin, pfl.stats.total_amount_sold)
 }

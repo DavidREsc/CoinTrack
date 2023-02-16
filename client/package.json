@@ -16,6 +16,7 @@
     "@mui/material": "^5.11.8",
     "decimal.js": "^10.4.3",
     "react": "^18.2.0",
+    "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.1",
     "react-icons": "^4.7.1",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
+    "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "^18.0.10",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^3.1.0",
