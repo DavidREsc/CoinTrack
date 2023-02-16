@@ -6,12 +6,13 @@ import { ITransaction } from '../../types'
 import { formatValue, lessThan, getAbs } from '../../utils/calculations'
 
 interface PflAssetsProps {
-    transactions: ITransaction[]
-    openSelect: () => void
+    transactions: ITransaction[];
+    openSelect: () => void;
+    openRemove: (value: string) => void;
 }
 
 const PortfolioAssets: React.FC<PflAssetsProps> = (props) => {
-    const {transactions, openSelect} = props
+    const {transactions, openSelect, openRemove} = props
     return (
         <div className='portfolio-assets'>
             <div className='assets-top'>
@@ -65,7 +66,7 @@ const PortfolioAssets: React.FC<PflAssetsProps> = (props) => {
                                     <td>
                                         <span className='span-actions'>
                                             <button className='more'><CgMoreVerticalO /></button>
-                                            <button className='remove'><RiDeleteBack2Line /></button>
+                                            <button onClick={() => openRemove(t.coin_id)} className='remove'><RiDeleteBack2Line /></button>
                                         </span>
                                     </td>
                                 </tr>

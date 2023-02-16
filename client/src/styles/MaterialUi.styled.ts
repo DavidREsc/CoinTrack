@@ -73,3 +73,30 @@ export const SubmitButton = styled(Button)({
 	},
 	padding: '1rem'
 })
+
+export const ButtonDelete = styled(Button)({
+	color: 'var(--color-info-light)',
+	border: '1px solid #ff3333',
+	backgroundColor: 'rgba(145, 17, 8, 0.7)',
+	'&:hover': {
+		color: '#CCC',
+		border: '1px solid #ff3333',
+		backgroundColor: 'rgba(145, 17, 8, 0.7)',
+
+	},
+	padding: '0.8rem',
+	borderRadius: '30px'
+})
+
+export const CancelButton = styled(Button)({
+	color: 'var(--color-dark)',
+	border: '1px solid #757575',
+	backgroundColor: 'rgba(117, 117, 117, 0.1)',
+	'&:hover': {
+		color: '#bdbdbd',
+		border: '1px solid #757575',
+		backgroundColor: 'hsl(0, 0%, 15%)',
+	},
+	padding: '0.8rem',
+	borderRadius: '30px'
+})
