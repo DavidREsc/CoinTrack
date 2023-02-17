@@ -10,6 +10,10 @@ import { IError } from './types'
 import Analytics from './components/analytics/Analytics'
 import Portfolios from './components/portfolio/Portfolios'
 import Browse from './components/browse/Browse'
+import { useLocation } from 'react-router-dom';
+import NotFound from './components/NotFound'
+import LoadingPage from './components/LoadingPage'
+import ErrorPage from './components/ErrorPage'
 
 
 const App: React.FC = () => {
@@ -18,6 +22,7 @@ const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
     const {verify} = useAuth()
+    const location = useLocation()
 
     // Checks to see if user is authenticated
     useEffect(() => {
@@ -37,11 +42,13 @@ const App: React.FC = () => {
     // Sets user state after login/signup and redirects to dashboard
     const handleUser = (newUser: string) => {
         setUser(newUser)
+        if (location.pathname !== '/') return navigate(location.pathname)
         navigate('/dashboard/portfolio')
+
     }
     return (
-        loading ? <div>Loading...</div> 
-        : error ? <div>Error</div> 
+        loading ? <LoadingPage /> 
+        : error ? <ErrorPage code={500} error={error}/>
         :
             <Routes>
                 <Route path='' element={<Login onUser={handleUser}/>} />
@@ -53,6 +60,7 @@ const App: React.FC = () => {
                         <Route path='browse' element={<Browse />}/>
                     </Route>
                 </Route>
+                <Route path='*' element={<NotFound />} />
             </Routes>
     )
 }

@@ -1,6 +1,8 @@
 import { createContext, useContext, ReactNode, useEffect, useState} from "react";
 import { ICoins, ICoinMap } from "../types";
 import useFetch from "../hooks/useFetch";
+import LoadingPage from "../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
 
 interface ICoinsContext {
     coinMap: ICoinMap;
@@ -31,8 +33,8 @@ export const CoinsProvider = ({children}: {children: ReactNode}) => {
     return (
         <CoinsContext.Provider value={value}>
             {
-                loading ? <div>Loading</div>
-                : error ? <div>{error}</div> 
+                loading ? <LoadingPage />
+                : error ? <ErrorPage code={500} error={error} /> 
                 : children
             }
         </CoinsContext.Provider>

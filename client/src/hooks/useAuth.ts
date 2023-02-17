@@ -52,5 +52,12 @@ export default function useAuth() {
             .catch((e: IError) => reject(e))
         })
     }
-    return {login, signup, verify, demoLogin}
+    const logout = () => {
+        return new Promise((resolve, reject) => {
+            axios.post('/api/v1/auth/logout', {method: 'POST'})
+            .then((response) => resolve(response))
+            .catch((e) => reject(e))
+        })
+    }
+    return {login, logout, signup, verify, demoLogin}
 }

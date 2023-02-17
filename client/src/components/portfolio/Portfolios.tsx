@@ -7,6 +7,8 @@ import PortfolioContainer from "./PortfolioContainer";
 import PortfoliosList from "./PortfoliosList";
 import { setLocalStorageItem } from "../../utils/localStorage";
 import usePortfolio from "../../hooks/usePortfolios";
+import LoadingPage from "../LoadingPage";
+import ErrorPage from "../ErrorPage";
 
 type TPortfolios = IPortfolio[]
 
@@ -76,8 +78,8 @@ const Portfolios: React.FC = () => {
 
 
     return (
-        loading ? <div>Loading</div> : 
-        error ? <div>Error</div> :
+        loading ? <LoadingPage /> : 
+        error ? <ErrorPage error={error} code={500}/> :
         <>
             {curPortfolio && portfolios && portfolioList && curPortfolioId &&
             <>

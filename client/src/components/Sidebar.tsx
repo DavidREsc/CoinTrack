@@ -6,6 +6,8 @@ import {ImNewspaper} from 'react-icons/im'
 import { NavLink } from 'react-router-dom'
 import {BiLogOutCircle} from 'react-icons/bi'
 import '../styles/sidebar.css'
+import useAuth from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 interface SidebarProps {
 	active: boolean;
@@ -14,6 +16,17 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
 	const {active, onHideSidebar} = props;
+	const {logout} = useAuth()
+	const navigate = useNavigate()
+	const handleLogout = async () => {
+		try {
+			await logout()
+			navigate('/')
+			
+		} catch (error) {
+			console.log(error)
+		}
+	}
   return (
     <aside className={active ? 'active' : ''}>
 			<div className='top'>
@@ -46,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 						<span className='react-icons'><IoMdSettings /></span>
 						<h3>Settings</h3>
 					</button>
-					<button className='logout-btn side-btn'>
+					<button onClick={handleLogout} className='logout-btn side-btn'>
 						<span className='react-icons'><BiLogOutCircle /></span>
 						<h3>Logout</h3>
 					</button>
