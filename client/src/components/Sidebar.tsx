@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 import {BiLogOutCircle} from 'react-icons/bi'
 import '../styles/sidebar.css'
 import useAuth from '../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, createSearchParams } from 'react-router-dom'
 
 interface SidebarProps {
 	active: boolean;
@@ -47,7 +47,10 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 						<span className='react-icons'><MdAnalytics /></span>
 						<h3>Analytics</h3>
 					</NavLink>
-					<NavLink to='browse' className='nav-links'>
+					<NavLink to={{pathname: "/dashboard/browse",
+            search: createSearchParams({
+                page: '1'
+            }).toString()}} className='nav-links'>
 						<span className='react-icons'><SiMarketo /></span>
 						<h3>Browse</h3>
 					</NavLink>

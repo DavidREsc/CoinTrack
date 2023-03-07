@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^2.9.10",
     "@mui/material": "^5.11.8",
     "decimal.js": "^10.4.3",
+    "lightweight-charts": "^4.0.0",
     "react": "^18.2.0",
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",

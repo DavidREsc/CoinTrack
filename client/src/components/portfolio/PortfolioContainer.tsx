@@ -25,9 +25,12 @@ const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
     const {open: addNew, handleOpen: openAddNew, handleClose: closeAddNew} = useModal()
     const {open: remove, handleOpen: openRemove, handleClose: closeRemove} = useModal()
     const {coinMap} = useCoinsContext()
+    
 
     const handleAddTnx = (data: TnxData) => {
+
         setLoading(true)
+
         onAddTransaction(data, selectedCoin!.uuid, (e) => {
             if (!e) {
                 closeAddNew()

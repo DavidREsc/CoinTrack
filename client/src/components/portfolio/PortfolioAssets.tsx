@@ -51,7 +51,7 @@ const PortfolioAssets: React.FC<PflAssetsProps> = (props) => {
                                     <td className='td-holdings'>
                                         <span className='span-holdings'>
                                             <p>{`$${formatValue(t.holdings!)}`}</p>
-                                            <p className="holdings-quantity">{`${t.coin_amount} ${t.symbol}`}</p>
+                                            <p className="holdings-quantity">{`${t.coin_amount_c} ${t.symbol}`}</p>
                                         </span>
                                     </td>
                                     <td>

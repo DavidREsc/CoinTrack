@@ -16,6 +16,7 @@ function useFetch<T = unknown>(url: string) {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true)
             try {
                 const response: IFetchResponse<T> = await axios.get(url)
                 setData(response.data.data)

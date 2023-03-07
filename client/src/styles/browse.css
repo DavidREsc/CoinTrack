@@ -1,0 +1,136 @@
+.browse-container {
+    margin-top: 2rem;
+    margin-bottom: 15%;
+}
+
+.browse-container table {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 2rem;
+    transition: all 300ms ease;
+    font-weight: bold;
+}
+
+
+.browse-container table td {
+    border-bottom: 1px solid var(--color-light);
+}
+.browse-container table tbody tr td button {
+    display: flex;
+    background: none;
+    margin: auto;
+    font-weight: bold;
+}
+
+.browse-container table tbody tr td button img {
+    width: 1rem;
+}
+.browse-container table tr:last-child td {
+    border: none;
+}
+
+.c-name button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.c-name p {
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    transition: all 200ms ease;
+}
+.c-name p:hover {
+    color: var(--color-primary);
+}
+.pagination {
+    display: flex;
+    gap: 1.4rem;
+    justify-content: center;
+    margin-top: 2rem;
+
+}
+.pagination button {
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 200ms ease;
+    padding: 0.7rem;
+}
+
+.pagination button:hover {
+    font-weight: bold;
+}
+.page.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 320px) {
+    .browse-container table {
+        font-size: 0.6rem;
+        border-spacing: 0 0.6rem;
+    }
+    .browse-container table thead tr th:nth-child(3) {
+        display: none;
+    }
+    .browse-container table tbody tr td:nth-child(3) {
+        display: none;
+    }
+    .browse-container table tbody tr td button {
+        font-size: 0.6rem;
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .browse-container table thead tr th:nth-child(3) {
+        display: block;
+    }
+    .browse-container table tbody tr td:nth-child(3) {
+        display: block;
+    }
+    .browse-container table {
+        font-size: 0.8rem;
+        border-spacing: 0 1rem;
+    }
+    .browse-container table tbody tr td button {
+        font-size: 0.8rem;
+    }
+    .c-name {
+        min-width: 15rem;
+    }
+    .browse-container {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .browse-container {
+        width: 80vw;
+    }
+    .browse-container table {
+        font-size: 1rem;
+        border-spacing: 0 1.2rem;
+    }
+    .browse-container table tbody tr td button {
+        font-size: 1rem;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+    .browse-container h1 {
+        margin-left: 2rem;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .pagination {
+        gap: 1.7rem;
+        margin-top: 4rem;
+    }
+    .pagination button {
+        font-size: 1.3rem;
+    }
+}

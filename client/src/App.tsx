@@ -1,20 +1,18 @@
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, useNavigate, useLocation, useSearchParams, createSearchParams} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import Dashboard from './components/Dashboard'
-import { useNavigate } from 'react-router-dom'
 import useAuth from './hooks/useAuth'
 import { IError } from './types'
 import Analytics from './components/analytics/Analytics'
 import Portfolios from './components/portfolio/Portfolios'
 import Browse from './components/browse/Browse'
-import { useLocation } from 'react-router-dom';
 import NotFound from './components/NotFound'
 import LoadingPage from './components/LoadingPage'
 import ErrorPage from './components/ErrorPage'
-
+import Coin from './components/browse/Coin'
 
 const App: React.FC = () => {
     const [user, setUser] = useState<string>("")
@@ -23,6 +21,8 @@ const App: React.FC = () => {
     const navigate = useNavigate()
     const {verify} = useAuth()
     const location = useLocation()
+    const [searchParams] = useSearchParams()
+    const [param, setParam] = useState<string| null>()
 
     // Checks to see if user is authenticated
     useEffect(() => {
@@ -42,7 +42,17 @@ const App: React.FC = () => {
     // Sets user state after login/signup and redirects to dashboard
     const handleUser = (newUser: string) => {
         setUser(newUser)
-        if (location.pathname !== '/') return navigate(location.pathname)
+        if (location.pathname !== '/') {
+            if (location.pathname === '/dashboard/browse') {
+                const page = searchParams.get('page')
+                return navigate({pathname: "/dashboard/browse",
+                    search: createSearchParams({
+                    page: page ? page : '1'
+                    }).toString()
+                })
+            }
+            return navigate(location.pathname)
+        }
         navigate('/dashboard/portfolio')
 
     }
@@ -58,6 +68,7 @@ const App: React.FC = () => {
                         <Route path='portfolio' element={<Portfolios />}/>
                         <Route path='analytics' element={<Analytics />}/>
                         <Route path='browse' element={<Browse />}/>
+                        <Route path='browse/:uuid' element={<Coin />}/>
                     </Route>
                 </Route>
                 <Route path='*' element={<NotFound />} />

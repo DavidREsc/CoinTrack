@@ -1,9 +1,16 @@
 import { ITransaction } from "../types"
+import Decimal from 'decimal.js'
+import { lessThan } from "./calculations";
 
-/*class Node {
-    val: ITransaction
+interface MapVal {
+    amount: string;
+    price: string;
+    t: ITransaction
+}
+class Node {
+    val: MapVal
     next: Node | null
-    constructor(val: ITransaction) {
+    constructor(val: MapVal) {
         this.val = val
         this.next = null
     }
@@ -20,7 +27,7 @@ class Queue {
         this.length = 0
     }
 
-    enqueue(val: ITransaction) {
+    enqueue(val: MapVal) {
         let node = new Node(val)
         if (!this.end) {
             this.end = node
@@ -46,7 +53,7 @@ class Queue {
         return this.next
     }
 
-    update(val: ITransaction) {
+    update(val: MapVal) {
         let node = new Node(val)
         if (this.length === 1) {
             this.end = node
@@ -74,6 +81,11 @@ class Queue {
 interface IMap {
     [prop: string]: Queue
 }
+interface ST {
+    amount: string;
+    price: string;
+    date: Date;
+}
 
 class Map {
     map: IMap;
@@ -82,7 +94,7 @@ class Map {
         this.map = {}
     }
 
-    set(key: string, val: ITransaction) {
+    set(key: string, val: MapVal) {
         if (!this.map[key]) {
             let queue = new Queue()
             queue.enqueue(val)
@@ -93,51 +105,51 @@ class Map {
         }
     }
 
-    sell(key: string, val: ITransaction) {
+    sell(key: string, val: ST) {
         // No buy transaction for this asset, sell transaction is entirely profit
-        if (!this.map[key]) return val.price * val.coin_amount!
+        if (!this.map[key]) return Decimal.mul(val.price, val.amount).toFixed()
         // Get earliest transaction value
         let originalVal = this.map[key].peek()
         // No more buy transactions left, sell transaction is entirely profit
-        if (!originalVal) return  val.price * val.amount
-        let newVal = {}
-        let profit = 0
+        if (!originalVal) return  Decimal.mul(val.price, val.amount).toFixed()
+        let newVal = {} as MapVal;
+        let profit = '0'
         while (originalVal) {
             if (originalVal.t.transaction_date > val.date) {
                 break;
             }
             // if sell transaction amount is larger than the buy transaction amount
-            else if (val.amount > originalVal.amount) {
+            else if (lessThan(originalVal.amount, val.amount)) {
                 // subtract buy amount from sell amount
-                val.amount -= originalVal.amount
-                originalVal.t.amount_sold = originalVal.t.asset_amount
+                val.amount = Decimal.sub(val.amount, originalVal.amount).toFixed()
+                originalVal.t.amount_sold = originalVal.t.coin_amount
                 // remove earliest buy transaction from queue
                 this.map[key].dequeue()
                 // calculate profit
-                profit += (val.price - originalVal.price) * originalVal.amount
+                profit = Decimal.sum(profit, Decimal.mul(Decimal.sub(val.price, originalVal.price), originalVal.amount)).toFixed()
                 // get next earliest buy transaction
                 originalVal = this.map[key].peek()
             }
             else {
-                newVal.amount = originalVal.amount - val.amount
-                originalVal.t.amount_sold = val.amount + (originalVal.t.amount_sold || 0)
+                newVal.amount = Decimal.sub(originalVal.amount, val.amount).toFixed()
+                originalVal.t.amount_sold = Decimal.sum(val.amount, (originalVal.t.amount_sold || 0)).toFixed()
                 newVal.price = originalVal.price
                 newVal.t = originalVal.t
-                profit += (val.price - originalVal.price) * val.amount
-                val.amount = 0
-                if (newVal.amount) this.map[key].update(newVal)
+                profit = Decimal.sum(profit, Decimal.mul(Decimal.sub(val.price, originalVal.price), val.amount)).toFixed()
+                val.amount = '0'
+                if (!lessThan(newVal.amount, '0')) this.map[key].update(newVal)
                 else this.map[key].dequeue()
                 break;
             } 
         }
-        if (val.amount) profit += val.price * val.amount
+        if (!lessThan(val.amount, '0')) profit = Decimal.sum(profit, Decimal.mul(val.price, val.amount)).toFixed()
         return profit
     }
 
-    print(key) {
+    print(key: string) {
         if (!this.map[key]) return
         this.map[key].print()
     }
 }
 
-export default Map*/
+export default Map

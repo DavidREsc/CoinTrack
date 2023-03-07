@@ -1,7 +1,7 @@
 import useFetch from "../../hooks/useFetch"
 import { useCoinsContext } from "../../contexts/CoinsProvider";
 import { useEffect, useState } from "react"
-import { getLastViewedPortfolioId, initNewPortfolioObj, updatePortfolioObj, updatePflObjDeleteAsset} from "../../utils/portfolioUtils";
+import { getLastViewedPortfolioId, initNewPortfolioObj, handleAddTnx, handleDeleteAsset} from "../../utils/portfolioUtils";
 import { IError, IPortfolio, IPortfolioData, IPortfoliosData, TnxData} from "../../types";
 import PortfolioContainer from "./PortfolioContainer";
 import PortfoliosList from "./PortfoliosList";
@@ -37,9 +37,11 @@ const Portfolios: React.FC = () => {
         const new_pfls = portfolios!.filter(p => p.id !== curPortfolioId).concat(new_pfl_obj)
         setPortfolios(new_pfls)
         setCurPortfolio(new_pfl_obj)
+        console.log('update pfl')
     }
 
     const handlePflChange = (id: number) => {
+        console.log('pfl change')
         let pfl = portfolios!.find((p) => p.id === id)
         if (!pfl) {
            pfl = initNewPortfolioObj(data!, id, coinMap)
@@ -52,21 +54,25 @@ const Portfolios: React.FC = () => {
 
     const addTransaction = async (data: TnxData, coin_id: string,
         cb: (e: IError | undefined) => void) => {
+        console.log('add tnx')
         try {
             const res = await useAddTransaction(data, coin_id, curPortfolioId!)
-            const new_pfl_obj = updatePortfolioObj(curPortfolio!, res, coinMap)
-            updatePortfolio(new_pfl_obj)
-            cb(undefined)
+                const new_pfl_obj = handleAddTnx(curPortfolio!, res, coinMap)
+                console.log(new_pfl_obj)
+                updatePortfolio(new_pfl_obj)
+                cb(undefined)
+
         } catch (error) {
             console.log(error)
             cb(error as IError)
         }
     }
 
-    const removeAsset = async (coin_id: string, cb: (e: IError | undefined) => void) => {
+    const removeAsset = async (coin_id: string, 
+        cb: (e: IError | undefined) => void) => {
         try {
             await useRemoveAsset(coin_id, curPortfolioId!)
-            const new_pfl_obj = updatePflObjDeleteAsset(curPortfolio!, coin_id)
+            const new_pfl_obj = handleDeleteAsset(curPortfolio!, coin_id)
             updatePortfolio(new_pfl_obj)
             cb(undefined)
         } catch (error) {

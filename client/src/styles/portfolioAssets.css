@@ -10,7 +10,7 @@
     text-align: center;
     box-shadow: var(--box-shadow);
     transition: all 300m ease;
-    border-spacing: 1rem;
+    border-spacing: 0 1rem;
     margin-bottom: 7rem;
 }
 

@@ -1,3 +1,5 @@
+import { UTCTimestamp } from "lightweight-charts";
+
 export interface IError {
     data: {
         success: boolean;
@@ -26,7 +28,7 @@ export interface IPortfolioStats {
     total_holdings: string;
     total_profit_margin: string;
     total_amount_sold: string;
-    capital_gains?: string;
+    capital_gains: string;
 }
 
 export interface IPortfolio {
@@ -93,6 +95,7 @@ export interface ITransaction {
     change?: string;
     iconUrl?: string;
     symbol?: string;
+    coin_amount_c: string;
 }
 
 export interface IPortfoliosData {
@@ -106,4 +109,34 @@ export interface TnxData {
 	transaction_date: Date;
     coin_amount: string;
     coin_price: string;
+}
+
+export interface ICoinHistory {
+    timestamp: UTCTimestamp;
+    price: string;
+}
+
+export interface ICoinDetails {
+    '24hVolume': string;
+    'allTimeHigh': {'price': string, 'timestamp': UTCTimestamp};
+    'change': string;
+    'description': string;
+    'iconUrl': string;
+    'links': [{'name': string, 'type': string, 'url': string}];
+    'marketCap': string;
+    'name': string;
+    'numberOfExchanges': string;
+    'numberOfMarkets': string;
+    'price': string;
+    'rank': number;
+    'uuid': string;
+    'websiteUrl': string;
+    'symbol': string;
+    'supply': {
+        'circulating': string;
+        'confirmed': boolean;
+        'max': string;
+        'supplyAt': number;
+        'total': string;
+    }
 }
