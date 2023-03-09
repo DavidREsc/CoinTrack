@@ -19,7 +19,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({open, onModa
                 open={open}
                 onClose={onModalClose}
             >
-                <>
+                <div className='form-container'>
                 <div className='form-top'>
                     <h2>Create New Portfolio</h2>
                     <button onClick={onModalClose} type='button'><MdClose /></button>
@@ -28,7 +28,7 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({open, onModa
                     loading={loading}
                     onCreatePortfolio={onCreatePortfolio}
                 />
-                </>
+                </div>
             </Modal>
         </>
     )

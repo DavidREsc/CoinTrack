@@ -22,7 +22,7 @@ const CreatePortfolioForm: React.FC<CreatePortfolioFormProps> = ({onCreatePortfo
         resolver: yupResolver(pflSchema)
     })
     return (
-        <form className='form-container' onSubmit={handleSubmit(onCreatePortfolio)}>
+        <form className='form' onSubmit={handleSubmit(onCreatePortfolio)}>
 
             <Controller 
                 control={control}
