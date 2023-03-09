@@ -1,4 +1,4 @@
-import { IError, TnxData, ITransaction } from "../types";
+import { IError, TnxData, ITransaction, IPortfolioData, PflData } from "../types";
 import axios from 'redaxios'
 
 interface AddTnxRes {
@@ -11,6 +11,12 @@ interface RemoveAssetRes {
     data: {
         success: boolean,
         data: {}
+    }
+}
+interface CreatePflRes {
+    data: {
+        success: boolean,
+        data: IPortfolioData
     }
 }
 
@@ -46,7 +52,19 @@ const usePortfolio = () => {
             .catch((error: IError) => reject(error))
         })
     }
-    return {useAddTransaction, useRemoveAsset}
+    const useCreatePortfolio = (data: PflData) => {
+        const {portfolio_name} = data
+        return new Promise<IPortfolioData>((resolve, reject) => {
+            axios.post('/api/v1/portfolios', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                portfolio_name
+            })
+            .then((response: CreatePflRes) => resolve(response.data.data))
+            .catch((error: IError) => reject(error))
+        })
+    }
+    return {useAddTransaction, useRemoveAsset, useCreatePortfolio}
 }
 
 export default usePortfolio;

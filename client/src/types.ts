@@ -140,3 +140,7 @@ export interface ICoinDetails {
         'total': string;
     }
 }
+
+export interface PflData {
+    portfolio_name: string;
+}

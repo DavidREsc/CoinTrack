@@ -35,7 +35,7 @@ export const createPortfolio: RequestHandler = asyncHandler(async (req: IPortfol
 
     res.status(201).json({
         success: true,
-        data: portfolio.rows
+        data: portfolio.rows[0]
     })
 })
 

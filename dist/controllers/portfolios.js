@@ -27,7 +27,7 @@ exports.createPortfolio = asyncHandler_1.default((req, res, next) => __awaiter(v
     const portfolio = yield db_1.default.query('INSERT INTO portfolios (portfolio_name, user_id) VALUES ($1, $2) RETURNING portfolio_id, portfolio_name, main', [portfolio_name, user_id]);
     res.status(201).json({
         success: true,
-        data: portfolio.rows
+        data: portfolio.rows[0]
     });
 }));
 exports.deletePortfolio = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

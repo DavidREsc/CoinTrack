@@ -2,9 +2,9 @@ import useFetch from "../../hooks/useFetch"
 import { useCoinsContext } from "../../contexts/CoinsProvider";
 import { useEffect, useState } from "react"
 import { getLastViewedPortfolioId, initNewPortfolioObj, handleAddTnx, handleDeleteAsset} from "../../utils/portfolioUtils";
-import { IError, IPortfolio, IPortfolioData, IPortfoliosData, TnxData} from "../../types";
+import { IError, IPortfolio, IPortfolioData, IPortfoliosData, PflData, TnxData} from "../../types";
 import PortfolioContainer from "./PortfolioContainer";
-import PortfoliosList from "./PortfoliosList";
+import PortfolioListContainer from "./PortfolioListContainer";
 import { setLocalStorageItem } from "../../utils/localStorage";
 import usePortfolio from "../../hooks/usePortfolios";
 import LoadingPage from "../LoadingPage";
@@ -15,7 +15,7 @@ type TPortfolios = IPortfolio[]
 const Portfolios: React.FC = () => {
     const {data, loading, error} = useFetch<IPortfoliosData>('/api/v1/portfolios')
     const {coinMap} = useCoinsContext()!
-    const {useAddTransaction, useRemoveAsset} = usePortfolio()
+    const {useAddTransaction, useRemoveAsset, useCreatePortfolio} = usePortfolio()
 
     const [portfolios, setPortfolios] = useState<TPortfolios>()
     const [portfolioList, setPortfolioList] = useState<IPortfolioData[]>()
@@ -33,18 +33,18 @@ const Portfolios: React.FC = () => {
         } 
     }, [data, loading])
 
-    const updatePortfolio = (new_pfl_obj: IPortfolio) => {
+    const updatePortfolioState = (new_pfl_obj: IPortfolio) => {
         const new_pfls = portfolios!.filter(p => p.id !== curPortfolioId).concat(new_pfl_obj)
         setPortfolios(new_pfls)
         setCurPortfolio(new_pfl_obj)
-        console.log('update pfl')
     }
 
-    const handlePflChange = (id: number) => {
-        console.log('pfl change')
+    const handlePortfolioChange = (id: number) => {
         let pfl = portfolios!.find((p) => p.id === id)
         if (!pfl) {
+            console.log(id)
            pfl = initNewPortfolioObj(data!, id, coinMap)
+           console.log(pfl)
            setPortfolios(prevState => prevState!.concat(pfl!))
         }
         setLocalStorageItem('portfolioId', String(id))
@@ -52,14 +52,26 @@ const Portfolios: React.FC = () => {
         setCurPortfolioId(id)
     }
 
+    const createPortfolio = async (data: PflData, 
+        cb: (e: IError | undefined) => void) => {
+        try {
+            const res = await useCreatePortfolio(data)
+            setPortfolioList(prev => prev!.concat(res))
+            handlePortfolioChange(res.portfolio_id)
+            cb(undefined)
+        } catch (error) {
+            console.log(error)
+            cb(error as IError)
+        }
+    }
+
     const addTransaction = async (data: TnxData, coin_id: string,
         cb: (e: IError | undefined) => void) => {
-        console.log('add tnx')
         try {
             const res = await useAddTransaction(data, coin_id, curPortfolioId!)
                 const new_pfl_obj = handleAddTnx(curPortfolio!, res, coinMap)
                 console.log(new_pfl_obj)
-                updatePortfolio(new_pfl_obj)
+                updatePortfolioState(new_pfl_obj)
                 cb(undefined)
 
         } catch (error) {
@@ -73,7 +85,7 @@ const Portfolios: React.FC = () => {
         try {
             await useRemoveAsset(coin_id, curPortfolioId!)
             const new_pfl_obj = handleDeleteAsset(curPortfolio!, coin_id)
-            updatePortfolio(new_pfl_obj)
+            updatePortfolioState(new_pfl_obj)
             cb(undefined)
         } catch (error) {
             console.log(error)
@@ -94,10 +106,11 @@ const Portfolios: React.FC = () => {
                     onAddTransaction={addTransaction}
                     onRemoveAsset={removeAsset}
                 />
-                <PortfoliosList 
+                <PortfolioListContainer 
                     portfolios={portfolioList}
                     curPortfolio={curPortfolioId}
-                    onPflChange={handlePflChange}
+                    onPflChange={handlePortfolioChange}
+                    onCreatePortfolio={createPortfolio}
                 />
             </>
             }
