@@ -20,14 +20,14 @@ const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({open, onModa
                 onClose={onModalClose}
             >
                 <div className='form-container'>
-                <div className='form-top'>
-                    <h2>Create New Portfolio</h2>
-                    <button onClick={onModalClose} type='button'><MdClose /></button>
-                </div>
-                <CreatePortfolioForm 
-                    loading={loading}
-                    onCreatePortfolio={onCreatePortfolio}
-                />
+                    <div className='form-top'>
+                        <h2>Create New Portfolio</h2>
+                        <button onClick={onModalClose} type='button'><MdClose /></button>
+                    </div>
+                    <CreatePortfolioForm 
+                        loading={loading}
+                        func={onCreatePortfolio}
+                    />
                 </div>
             </Modal>
         </>

@@ -42,7 +42,7 @@ const App: React.FC = () => {
     // Sets user state after login/signup and redirects to dashboard
     const handleUser = (newUser: string) => {
         setUser(newUser)
-        if (location.pathname !== '/') {
+        if (location.pathname !== '/' && location.pathname !== '/sign-up') {
             if (location.pathname === '/dashboard/browse') {
                 const page = searchParams.get('page')
                 return navigate({pathname: "/dashboard/browse",
@@ -54,8 +54,10 @@ const App: React.FC = () => {
             return navigate(location.pathname)
         }
         navigate('/dashboard/portfolio')
-
     }
+
+    const handleUserLogout = () => setUser("");
+
     return (
         loading ? <LoadingPage /> 
         : error ? <ErrorPage code={500} error={error}/>
@@ -64,7 +66,7 @@ const App: React.FC = () => {
                 <Route path='' element={<Login onUser={handleUser}/>} />
                 <Route path='sign-up' element={<Signup onUser={handleUser}/>} />
                 <Route element={<ProtectedRoute user={user}/>}>
-                    <Route path='dashboard' element={<Dashboard />}>
+                    <Route path='dashboard' element={<Dashboard onLogout={handleUserLogout}/>}>
                         <Route path='portfolio' element={<Portfolios />}/>
                         <Route path='analytics' element={<Analytics />}/>
                         <Route path='browse' element={<Browse />}/>

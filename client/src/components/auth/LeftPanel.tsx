@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import LoginImg from '../../assets/login.svg'
 
 interface LeftPanelProps {
@@ -5,6 +6,7 @@ interface LeftPanelProps {
 }
 
 const LeftPanel: React.FC<LeftPanelProps> = (props) => {
+
   return (
     <div className='panel'>
 			<div className='panel-signup'>

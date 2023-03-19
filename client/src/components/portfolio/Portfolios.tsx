@@ -15,7 +15,7 @@ type TPortfolios = IPortfolio[]
 const Portfolios: React.FC = () => {
     const {data, loading, error} = useFetch<IPortfoliosData>('/api/v1/portfolios')
     const {coinMap} = useCoinsContext()!
-    const {useAddTransaction, useRemoveAsset, useCreatePortfolio} = usePortfolio()
+    const {useAddTransaction, useRemoveAsset, useCreatePortfolio, useDeletePortfolio} = usePortfolio()
 
     const [portfolios, setPortfolios] = useState<TPortfolios>()
     const [portfolioList, setPortfolioList] = useState<IPortfolioData[]>()
@@ -41,6 +41,7 @@ const Portfolios: React.FC = () => {
 
     const handlePortfolioChange = (id: number) => {
         let pfl = portfolios!.find((p) => p.id === id)
+        console.log(id)
         if (!pfl) {
             console.log(id)
            pfl = initNewPortfolioObj(data!, id, coinMap)
@@ -63,6 +64,24 @@ const Portfolios: React.FC = () => {
             console.log(error)
             cb(error as IError)
         }
+    }
+
+    const deletePortfolio = async (id: number, 
+        cb: (e: IError | undefined) => void) => {
+        try {
+            const res = await useDeletePortfolio(id)
+            setPortfolios(prev => prev!.filter(p => p.id !== id))
+            setPortfolioList(prev => prev!.filter(p => p.portfolio_id !== id))
+            if (id === curPortfolioId) {
+                setCurPortfolio(portfolios![0])
+                setCurPortfolioId(portfolios![0].id)
+            }
+            cb(undefined)
+        } catch (error) {
+            console.log(error)
+            cb(error as IError)
+        }
+
     }
 
     const addTransaction = async (data: TnxData, coin_id: string,
@@ -111,6 +130,7 @@ const Portfolios: React.FC = () => {
                     curPortfolio={curPortfolioId}
                     onPflChange={handlePortfolioChange}
                     onCreatePortfolio={createPortfolio}
+                    onDeletePortfolio={deletePortfolio}
                 />
             </>
             }

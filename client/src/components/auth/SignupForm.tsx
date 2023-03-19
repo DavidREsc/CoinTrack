@@ -2,6 +2,7 @@ import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { ISignupData } from '../../types'
+import SignInBtn from '../buttons/SignInBtn'
 
 const loginSchema = yup.object().shape({
 	email: yup.string()
@@ -18,13 +19,14 @@ const loginSchema = yup.object().shape({
 interface SignupFormProps {
 	onSubmit: (data: ISignupData) => void
 	onError: string;
+	loading: boolean;
 }
 
 const SignupForm: React.FC<SignupFormProps> = (props) => {
   const {register, handleSubmit, formState: {errors}} = useForm<ISignupData>({
 		resolver: yupResolver(loginSchema)
 	})
-  const {onError} = props;
+  const {onError, loading} = props;
 
   return (
 		<form 
@@ -66,10 +68,9 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
 				<p>{errors.confirm_password?.message}</p>	
 			</div>
             
-			<input 
-				className='auth-submit-btn'
-				type='submit'
-			/>
+			<div className='auth-submit-btn'>
+				<SignInBtn text={'Sign Up'} loading={loading}/>
+			</div>
 		</form>
 	)
 }

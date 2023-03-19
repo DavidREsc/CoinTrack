@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {VscTriangleUp, VscTriangleDown} from 'react-icons/vsc'
 import { ICoin } from '../../types'
 import { formatValue, lessThan, getAbs } from "../../utils/calculations"
@@ -11,8 +12,12 @@ interface CoinTableProps {
 }
 
 const CoinTable: React.FC<CoinTableProps> = ({coins, page, interval, onCoinSelect}) => {
+    useEffect(() => {
+        console.log(coins, page, interval)
+    }, [coins, page, interval])
     return (
         <>
+        {coins && page !== null && interval &&
         <table>
                 <thead>
                     <tr>
@@ -46,7 +51,7 @@ const CoinTable: React.FC<CoinTableProps> = ({coins, page, interval, onCoinSelec
                     )
                 })}
             </tbody>
-        </table>
+        </table> }
         </>
     )
 }

@@ -7,7 +7,7 @@ import { TextFieldTransaction } from "../../styles/MaterialUi.styled"
 import SubmitBtn from "../buttons/SubmitBtn"
 
 interface CreatePortfolioFormProps {
-    onCreatePortfolio: (data: PflData) => void;
+    func: (data: PflData) => void;
     loading: boolean;
 }
 
@@ -17,12 +17,12 @@ const pflSchema = yup.object().shape({
         .max(32, 'Name must be 32 characters or less')
 })
 
-const CreatePortfolioForm: React.FC<CreatePortfolioFormProps> = ({onCreatePortfolio, loading}) => {
+const CreatePortfolioForm: React.FC<CreatePortfolioFormProps> = ({func, loading}) => {
     const {handleSubmit, control} = useForm<PflData>({
         resolver: yupResolver(pflSchema)
     })
     return (
-        <form className='form' onSubmit={handleSubmit(onCreatePortfolio)}>
+        <form className='form' onSubmit={handleSubmit(func)}>
 
             <Controller 
                 control={control}
@@ -40,6 +40,7 @@ const CreatePortfolioForm: React.FC<CreatePortfolioFormProps> = ({onCreatePortfo
                         onChange={onChange}
                         value={value}
                         helperText={error ? error.message : null}
+                        autoFocus
                     />
                 )}
             />

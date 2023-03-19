@@ -5,12 +5,13 @@ import cache from "../cache";
 interface ICoinsData {
     stats: string[]
     coins: string[]
+    length: number
 }
 
 export const getCoins: RequestHandler = asyncHandler(async (req, res, next) => {
 
     // Check if coins are cached
-    let cachedCoins = await cache.get('cois')
+    let cachedCoins = await cache.get('coins')
     if (cachedCoins) {
         return res.status(200).json({
             status: "success",
@@ -19,9 +20,9 @@ export const getCoins: RequestHandler = asyncHandler(async (req, res, next) => {
     }
     // Request top 1000 coins from Coinranking api
     let apiRequests = []
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 1; i++) {
         // Push request promises to array
-        apiRequests.push(fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=100&offset=${i*100}`, {
+        apiRequests.push(fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=3000`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "coinranking1.p.rapidapi.com",
@@ -32,7 +33,8 @@ export const getCoins: RequestHandler = asyncHandler(async (req, res, next) => {
 
     let data: ICoinsData = {
         stats: [],
-        coins: []
+        length: 0,
+        coins: [],
     }
 
     // Await api request concurrently and push data to data object
@@ -40,6 +42,7 @@ export const getCoins: RequestHandler = asyncHandler(async (req, res, next) => {
     for (let i = 0; i < response.length; i++) {
         const responseJson = await response[i].json()
         data.coins = [...data.coins, ...responseJson.data.coins]
+        data.length += responseJson.data.coins.length
         if (i == 0) data.stats = responseJson.data.stats
     }
 

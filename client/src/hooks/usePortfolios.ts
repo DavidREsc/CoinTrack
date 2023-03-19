@@ -19,6 +19,12 @@ interface CreatePflRes {
         data: IPortfolioData
     }
 }
+interface DeletePflRes {
+    data: {
+        success: boolean,
+        data: {}
+    }
+}
 
 const usePortfolio = () => {
     const useAddTransaction = (data: TnxData, coin_id: string, portfolio_id: number) => {
@@ -64,7 +70,16 @@ const usePortfolio = () => {
             .catch((error: IError) => reject(error))
         })
     }
-    return {useAddTransaction, useRemoveAsset, useCreatePortfolio}
+    const useDeletePortfolio = (id: number) => {
+        return new Promise<{}>((resolve, reject) => {
+            axios.delete(`/api/v1/portfolios/${id}`, {
+                method: 'DELETE',
+            })
+            .then((response: DeletePflRes) => resolve(response.data.data))
+            .catch((error: IError) => reject(error))
+        })
+    }
+    return {useAddTransaction, useRemoveAsset, useCreatePortfolio, useDeletePortfolio}
 }
 
 export default usePortfolio;

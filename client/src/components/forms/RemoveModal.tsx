@@ -9,12 +9,12 @@ interface RemoveModal {
     text: string;
     loading: boolean;
     deleteFunc: () => void;
-    onSelect: (value: string | undefined) => void;
+    onSelect: ((value: string | undefined) => void) | undefined;
 }
 
 const RemoveModal: React.FC<RemoveModal> = ({open, onClose, text, title, loading, deleteFunc, onSelect}) => {
     const handleClose = () => {
-        onSelect(undefined)
+        if (onSelect) onSelect(undefined)
         onClose()
     }
     return (

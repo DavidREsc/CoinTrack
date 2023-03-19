@@ -17,7 +17,7 @@ const asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 const cache_1 = __importDefault(require("../cache"));
 exports.getCoins = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // Check if coins are cached
-    let cachedCoins = yield cache_1.default.get('cois');
+    let cachedCoins = yield cache_1.default.get('coins');
     if (cachedCoins) {
         return res.status(200).json({
             status: "success",
@@ -26,9 +26,9 @@ exports.getCoins = asyncHandler_1.default((req, res, next) => __awaiter(void 0, 
     }
     // Request top 1000 coins from Coinranking api
     let apiRequests = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 1; i++) {
         // Push request promises to array
-        apiRequests.push(fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=100&offset=${i * 100}`, {
+        apiRequests.push(fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=3000`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "coinranking1.p.rapidapi.com",
@@ -38,13 +38,15 @@ exports.getCoins = asyncHandler_1.default((req, res, next) => __awaiter(void 0, 
     }
     let data = {
         stats: [],
-        coins: []
+        length: 0,
+        coins: [],
     };
     // Await api request concurrently and push data to data object
     const response = yield Promise.all(apiRequests);
     for (let i = 0; i < response.length; i++) {
         const responseJson = yield response[i].json();
         data.coins = [...data.coins, ...responseJson.data.coins];
+        data.length += responseJson.data.coins.length;
         if (i == 0)
             data.stats = responseJson.data.stats;
     }

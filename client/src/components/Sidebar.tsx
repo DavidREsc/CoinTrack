@@ -12,16 +12,18 @@ import { useNavigate, createSearchParams } from 'react-router-dom'
 interface SidebarProps {
 	active: boolean;
 	onHideSidebar: () => void;
+	onLogout: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
-	const {active, onHideSidebar} = props;
+	const {active, onHideSidebar, onLogout} = props;
 	const {logout} = useAuth()
 	const navigate = useNavigate()
 	const handleLogout = async () => {
 		try {
 			await logout()
-			navigate('/')
+			onLogout()
+			navigate('/', {replace: true});
 			
 		} catch (error) {
 			console.log(error)

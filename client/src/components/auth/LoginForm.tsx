@@ -2,6 +2,8 @@ import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { ILoginData } from '../../types'
+import SignInBtn from '../buttons/SignInBtn'
+import DemoButton from '../buttons/DemoBtn'
 
 const loginSchema = yup.object().shape({
 	email: yup.string()
@@ -16,13 +18,15 @@ interface LoginFormProps {
 	onSubmit: (data: ILoginData) => void
 	onDemoLogin: () => void
 	onError: string;
+	loading: boolean;
+	demoLoading: boolean;
 }
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
   const {register, handleSubmit, formState: {errors}} = useForm<ILoginData>({
 		resolver: yupResolver(loginSchema)
 	})
-  const {onError} = props;
+  const {onError, loading, demoLoading, onDemoLogin} = props;
 
   return (
 		<form 
@@ -52,17 +56,10 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 				/>
 				<p>{errors.password?.message}</p>	
 			</div>
-			<input 
-				className='auth-submit-btn'
-				type='submit'
-			/>
-			<button
-				className='auth-submit-btn'
-				type='button'
-				onClick={props.onDemoLogin}
-			>
-				Demo
-			</button>
+			<div className='auth-submit-btn'>
+				<SignInBtn text={'login'} loading={loading} />
+				<DemoButton text={'demo'} loading={demoLoading} func={onDemoLogin}/>
+			</div>
 		</form>
 	)
 }

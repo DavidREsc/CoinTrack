@@ -51,6 +51,7 @@ export const calculateProfitMargin = (curHoldings: string, initialHoldings: stri
 }
 
 export const getAbs = (value: string, decimals: number | undefined = undefined) => {
+    if (!value) return '0';
     const x = new Decimal(value)
     if (decimals) {
         return x.absoluteValue().toFixed(decimals)
@@ -76,6 +77,7 @@ export const formatValue = (value: string | number, price: boolean = true) => {
 }
 
 export const lessThan = (value: string, y: string | number | Decimal) => {
+    if (!value) return false;
     const x = new Decimal(value)
     return x.lessThan(y)
 }

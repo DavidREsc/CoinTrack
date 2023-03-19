@@ -74,6 +74,30 @@ export const SubmitButton = styled(Button)({
 	padding: '1rem'
 })
 
+export const SignInButton = styled(Button)({
+	color: 'hsl(217, 74%, 39%)',
+	border: '1px solid 	hsl(217, 74%, 39%)',
+	'&:hover': {
+		color: 'hsl(217, 74%, 39%)',
+		border: '1px solid hsl(217, 74%, 45%)',
+		backgroundColor: 'rgba(26, 82, 171, 0.1)'
+	},
+	padding: '1rem'
+})
+
+
+export const ButtonDemo = styled(Button)({
+	color: 'hsl(0, 75%, 50%)',
+	border: '1px solid hsl(0, 75%, 50%)',
+	'&:hover': {
+		color: 'hsl(0, 75%, 60%)',
+		border: '1px solid hsl(0, 75%, 60%)',
+		backgroundColor: 'rgba(223, 32, 32, 0.1)'
+	},
+	marginTop: '1rem',
+	padding: '1rem'
+})
+
 export const ButtonDelete = styled(Button)({
 	color: 'var(--color-info-light)',
 	border: '1px solid #ff3333',
