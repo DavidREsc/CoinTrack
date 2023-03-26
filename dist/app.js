@@ -23,6 +23,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = require("socket.io");
 const errorHandler_1 = __importDefault(require("./middleware/errorHandler"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
@@ -36,6 +38,8 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const portfolios_1 = __importDefault(require("./routes/portfolios"));
 const transactions_1 = __importDefault(require("./routes/transactions"));
 const app = express_1.default();
+const server = http_1.default.createServer(app);
+const io = new socket_io_1.Server(server, { path: '/socket' });
 const PORT = Number(process.env.PORT) || 5001;
 // Request body parser
 app.use(express_1.default.json());
@@ -58,7 +62,14 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../client/dist/index.html'));
 });
+io.on('connection', (socket) => {
+    console.log('User connected');
+    io.emit('connected', 'hi');
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });

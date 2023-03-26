@@ -1,9 +1,10 @@
-import { Outlet, useNavigate} from "react-router-dom"
+import { Outlet} from "react-router-dom"
 import Sidebar from "./Sidebar"
 import '../styles/dashboard.css'
 import { CoinsProvider } from "../contexts/CoinsProvider"
 import Menu from "./Menu"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import useSocket from "../hooks/useSocket"
 
 interface DashBoardProps {
     onLogout: () => void;
@@ -14,7 +15,6 @@ const Dashboard: React.FC<DashBoardProps> = ({onLogout}) => {
     const handleSidebar = () => {
         setActive(prevState => !prevState)
     }
-
     return (
         <>
         <Menu onShowSidebar={handleSidebar}/>

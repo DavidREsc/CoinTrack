@@ -10,6 +10,11 @@ export default defineConfig({
         target: "http://server:5000",
         changeOrigin: true,
         rewrite: (path) => { console.log(path); return path.replace('/^\/api/', '') }
+      },
+      '/socket': {
+        target: "http://server:5000",
+        changeOrigin: true,
+        ws: true,
       }
     }
   }

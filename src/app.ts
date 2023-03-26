@@ -1,4 +1,6 @@
 import Express, {Request, Response} from 'express'
+import http from 'http'
+import {Server} from 'socket.io'
 import errorHandler from './middleware/errorHandler'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -15,6 +17,8 @@ import portfolios from './routes/portfolios'
 import transactions from './routes/transactions'
 
 const app = Express()
+const server = http.createServer(app)
+const io = new Server(server, {path: '/socket'})
 const PORT = Number(process.env.PORT) || 5001
 
 // Request body parser
@@ -43,7 +47,15 @@ app.get('/*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'))
 })
 
+io.on('connection', (socket) => {
+    console.log('User connected')
+    io.emit('connected', 'hi')
+    socket.on('disconnect', () => {
+        console.log('User disconnected')
+    })
+})
+
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 })

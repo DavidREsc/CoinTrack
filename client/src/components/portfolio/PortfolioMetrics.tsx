@@ -19,7 +19,7 @@ const PortfolioMetrics: React.FC<PflMetricsProps> = (props) => {
                     <div className='middle'>
                         <div className="left">
                             <h3>Total Value</h3>
-                            <h1>{`$${formatValue(stats.total_holdings)}`}</h1>
+                            <h2 className='total'>{`$${formatValue(stats.total_holdings)}`}</h2>
                         </div>
                         <div 
                             className="total-profit-margin"
@@ -46,7 +46,7 @@ const PortfolioMetrics: React.FC<PflMetricsProps> = (props) => {
                     <div className='middle'>
                         <div className="left">
                             <h3>Total Sold</h3>
-                            <h1>{`$${formatValue(stats.total_amount_sold)}`}</h1>
+                            <h2 className='total'>{`$${formatValue(stats.total_amount_sold)}`}</h2>
                         </div>
                     </div>
                 </div> 
@@ -56,7 +56,7 @@ const PortfolioMetrics: React.FC<PflMetricsProps> = (props) => {
                     <div className='middle'>
                         <div className="left">
                             <h3>Capital Gains</h3>
-                            <h1>{`$${formatValue(stats.capital_gains)}`}</h1>
+                            <h2 className='total'>{`$${formatValue(stats.capital_gains)}`}</h2>
                         </div>
                     </div>
                 </div> 
