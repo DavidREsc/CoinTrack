@@ -15,6 +15,7 @@ const Dashboard: React.FC<DashBoardProps> = ({onLogout}) => {
     const handleSidebar = () => {
         setActive(prevState => !prevState)
     }
+    const {socket} = useSocket()
     return (
         <>
         <Menu onShowSidebar={handleSidebar}/>
