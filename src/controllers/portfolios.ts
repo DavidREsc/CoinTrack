@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler";
 import db from '../db'
 import { RequestHandler, Request } from "express";
+import ErrorResponse from "../utils/errorResponse";
 
 interface IPortfolioData {
     portfolio_name: string;

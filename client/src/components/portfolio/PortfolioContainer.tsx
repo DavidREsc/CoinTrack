@@ -28,9 +28,7 @@ const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
     
 
     const handleAddTnx = (data: TnxData) => {
-
         setLoading(true)
-
         onAddTransaction(data, selectedCoin!.uuid, (e) => {
             if (!e) {
                 closeAddNew()

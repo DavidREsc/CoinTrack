@@ -104,6 +104,11 @@ export interface IPortfoliosData {
     portfolios: IPortfolioData[]
 }
 
+export interface IPortfoliosRes {
+    success: boolean;
+    data: IPortfoliosData
+}
+
 export interface TnxData {
 	transaction_type: string;
 	transaction_date: Date;
@@ -143,4 +148,23 @@ export interface ICoinDetails {
 
 export interface PflData {
     portfolio_name: string;
+}
+
+export interface ICoinsData {
+    stats: IStats
+    coins: ICoin[]
+    length: number
+}
+
+export interface ICoinsResponse {
+    success: boolean;
+    data: ICoinsData;
+}
+
+export interface ServerToClientEvents {
+    disconnect: () => void;
+}
+
+export interface ClientToServerEvents {
+    coins: (coins: ICoinsResponse) => void;
 }

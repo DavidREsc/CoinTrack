@@ -13,7 +13,6 @@ interface CoinTableProps {
 
 const CoinTable: React.FC<CoinTableProps> = ({coins, page, interval, onCoinSelect}) => {
     useEffect(() => {
-        console.log(coins, page, interval)
     }, [coins, page, interval])
     return (
         <>

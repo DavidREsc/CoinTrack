@@ -56,7 +56,6 @@ export const mergeTransactions = (transactions: ITransaction[]) => {
     mergedTransactions.forEach(t => {
         t.profitMargin = calculateProfitMargin(t.holdings || '0', t.initial_holdings || '0')
     })
-    console.log(mergedTransactions)
     return mergedTransactions;
 }
 
@@ -65,7 +64,6 @@ export const mergeTransactions = (transactions: ITransaction[]) => {
 export const calculateCapitalGains = (buy_tnx: ITransaction[], sell_tnx: ITransaction[]) => {
     const map = new Map()
 
-    console.log(buy_tnx, sell_tnx)
     buy_tnx.forEach(t => {
         t.amount_sold = '0'
         map.set(t.coin_id, {amount: t.coin_amount, price: t.coin_price, t})

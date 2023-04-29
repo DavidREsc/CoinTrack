@@ -1,37 +1,49 @@
-import useFetch from "../../hooks/useFetch"
 import { useCoinsContext } from "../../contexts/CoinsProvider";
 import { useEffect, useState } from "react"
 import { getLastViewedPortfolioId, initNewPortfolioObj, handleAddTnx, handleDeleteAsset} from "../../utils/portfolioUtils";
-import { IError, IPortfolio, IPortfolioData, IPortfoliosData, PflData, TnxData} from "../../types";
+import { IError, IPortfolio, IPortfolioData, IPortfoliosData, PflData, TnxData, IPortfoliosRes} from "../../types";
 import PortfolioContainer from "./PortfolioContainer";
 import PortfolioListContainer from "./PortfolioListContainer";
 import { setLocalStorageItem } from "../../utils/localStorage";
 import usePortfolio from "../../hooks/usePortfolios";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
+import axios from 'redaxios'
 
 type TPortfolios = IPortfolio[]
 
 const Portfolios: React.FC = () => {
-    const {data, loading, error} = useFetch<IPortfoliosData>('/api/v1/portfolios')
     const {coinMap} = useCoinsContext()!
     const {useAddTransaction, useRemoveAsset, useCreatePortfolio, useDeletePortfolio} = usePortfolio()
 
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string>("")
+    const [data, setData] = useState<IPortfoliosData>()
     const [portfolios, setPortfolios] = useState<TPortfolios>()
     const [portfolioList, setPortfolioList] = useState<IPortfolioData[]>()
     const [curPortfolio, setCurPortfolio] = useState<IPortfolio>()
     const [curPortfolioId, setCurPortfolioId] = useState<number>()
 
     useEffect(() => {
-        if (!loading && !error && data) {
-            const cur_pfl_id = getLastViewedPortfolioId(data.portfolios)
-            const newPortfolio = initNewPortfolioObj(data, cur_pfl_id, coinMap)
-            setCurPortfolio(newPortfolio)
-            setPortfolios([newPortfolio])
-            setPortfolioList(data.portfolios)
-            setCurPortfolioId(cur_pfl_id)
-        } 
-    }, [data, loading])
+        const getTransactions = async () => {
+            try {
+                const res = await axios.get<IPortfoliosRes>('/api/v1/portfolios')
+                const cur_pfl_id = getLastViewedPortfolioId(res.data.data.portfolios)
+                const newPortfolio = initNewPortfolioObj(res.data.data, cur_pfl_id, coinMap)
+                setData(res.data.data)
+                setCurPortfolio(newPortfolio)
+                setPortfolios([newPortfolio])
+                setPortfolioList(res.data.data.portfolios)
+                setCurPortfolioId(cur_pfl_id)
+            } catch (error) {
+                console.log(error)
+                setError((error as IError).data.error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        getTransactions()
+    }, [coinMap])
 
     const updatePortfolioState = (new_pfl_obj: IPortfolio) => {
         const new_pfls = portfolios!.filter(p => p.id !== curPortfolioId).concat(new_pfl_obj)
@@ -41,11 +53,8 @@ const Portfolios: React.FC = () => {
 
     const handlePortfolioChange = (id: number) => {
         let pfl = portfolios!.find((p) => p.id === id)
-        console.log(id)
         if (!pfl) {
-            console.log(id)
            pfl = initNewPortfolioObj(data!, id, coinMap)
-           console.log(pfl)
            setPortfolios(prevState => prevState!.concat(pfl!))
         }
         setLocalStorageItem('portfolioId', String(id))
@@ -89,10 +98,8 @@ const Portfolios: React.FC = () => {
         try {
             const res = await useAddTransaction(data, coin_id, curPortfolioId!)
                 const new_pfl_obj = handleAddTnx(curPortfolio!, res, coinMap)
-                console.log(new_pfl_obj)
                 updatePortfolioState(new_pfl_obj)
                 cb(undefined)
-
         } catch (error) {
             console.log(error)
             cb(error as IError)

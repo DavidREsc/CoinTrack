@@ -1,8 +1,7 @@
 import { createContext, useContext, ReactNode, useEffect, useState} from "react";
-import { ICoins, ICoinMap } from "../types";
-import useFetch from "../hooks/useFetch";
+import { ICoins, ICoinMap, ICoin, ICoinsResponse } from "../types";
 import LoadingPage from "../components/LoadingPage";
-import ErrorPage from "../components/ErrorPage";
+import initSocket from "../hooks/initSocket";
 
 interface ICoinsContext {
     coinMap: ICoinMap;
@@ -13,17 +12,24 @@ const CoinsContext = createContext<ICoinsContext>({} as ICoinsContext)
 export const useCoinsContext = () => useContext(CoinsContext)
 
 export const CoinsProvider = ({children}: {children: ReactNode}) => {
-    const {data, loading, error} = useFetch<ICoins>('/api/v1/coins')
+    const [loading, setLoading] = useState<boolean>(true)
     const [coinMap, setCoinMap] = useState<ICoinMap>({})
+    const [data, setData] = useState<ICoins>()
+    const {socket} = initSocket()
     useEffect(() => {
-        let map: ICoinMap = {}
-        if (!loading && !error && data) {
-            data.coins.forEach(d => {
+        socket.on('coins', (data: ICoinsResponse) => {
+            let map: ICoinMap = {}
+            data.data.coins.forEach((d: ICoin) => {
                 map[d.uuid] = d
             })
             setCoinMap(map)
+            setData(data.data)
+            setLoading(false)
+        })
+        return () => {
+            socket.off('coins')
         }
-    }, [data, loading])
+    }, [loading, socket])
 
     const value = {
         coinMap,
@@ -34,7 +40,6 @@ export const CoinsProvider = ({children}: {children: ReactNode}) => {
         <CoinsContext.Provider value={value}>
             {
                 loading ? <LoadingPage />
-                : error ? <ErrorPage code={500} error={error} /> 
                 : children
             }
         </CoinsContext.Provider>

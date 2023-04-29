@@ -1,21 +1,23 @@
-import { Outlet} from "react-router-dom"
+import { Outlet, useOutletContext} from "react-router-dom"
 import Sidebar from "./Sidebar"
 import '../styles/dashboard.css'
 import { CoinsProvider } from "../contexts/CoinsProvider"
 import Menu from "./Menu"
 import { useState, useEffect } from "react"
-import useSocket from "../hooks/useSocket"
+import initSocket from "../hooks/initSocket"
+import { Socket } from "socket.io-client"
 
 interface DashBoardProps {
     onLogout: () => void;
 }
+type SocketContextType = {socket: Socket}
 
 const Dashboard: React.FC<DashBoardProps> = ({onLogout}) => {
     const [active, setActive] = useState<boolean>(false)
     const handleSidebar = () => {
         setActive(prevState => !prevState)
     }
-    const {socket} = useSocket()
+
     return (
         <>
         <Menu onShowSidebar={handleSidebar}/>
@@ -30,3 +32,7 @@ const Dashboard: React.FC<DashBoardProps> = ({onLogout}) => {
 }
 
 export default Dashboard
+
+export function useSocket() {
+    return useOutletContext<SocketContextType>()
+}

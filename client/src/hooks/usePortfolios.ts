@@ -29,8 +29,8 @@ interface DeletePflRes {
 const usePortfolio = () => {
     const useAddTransaction = (data: TnxData, coin_id: string, portfolio_id: number) => {
         const {transaction_type, transaction_date, coin_amount, coin_price} = data
-        return new Promise<ITransaction>((resolve, reject) => {
-            axios.post('/api/v1/transactions', {
+        return new Promise<ITransaction>(async (resolve, reject) => {
+            await axios.post('/api/v1/transactions', {
                 method: 'POST',
                 headers: {'Content-Type': 'applications/json'},
                 portfolio_id,
@@ -45,8 +45,8 @@ const usePortfolio = () => {
         })
     }
     const useRemoveAsset = (coin_id: string, portfolio_id: number) => {
-        return new Promise<{}>((resolve, reject) => {
-            axios.delete('/api/v1/transactions', {
+        return new Promise<{}>(async (resolve, reject) => {
+           await axios.delete('/api/v1/transactions', {
                 method: 'DELETE',
                 headers: {'Content-Type': 'application/json'},
                 data: {
@@ -60,8 +60,8 @@ const usePortfolio = () => {
     }
     const useCreatePortfolio = (data: PflData) => {
         const {portfolio_name} = data
-        return new Promise<IPortfolioData>((resolve, reject) => {
-            axios.post('/api/v1/portfolios', {
+        return new Promise<IPortfolioData>(async (resolve, reject) => {
+            await axios.post('/api/v1/portfolios', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 portfolio_name
@@ -71,8 +71,8 @@ const usePortfolio = () => {
         })
     }
     const useDeletePortfolio = (id: number) => {
-        return new Promise<{}>((resolve, reject) => {
-            axios.delete(`/api/v1/portfolios/${id}`, {
+        return new Promise<{}>(async (resolve, reject) => {
+            await axios.delete(`/api/v1/portfolios/${id}`, {
                 method: 'DELETE',
             })
             .then((response: DeletePflRes) => resolve(response.data.data))

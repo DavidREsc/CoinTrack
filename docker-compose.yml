@@ -21,6 +21,7 @@ services:
       - '5000:5000'
     depends_on:
       - postgres
+      - redis
     environment:
       PGUSER: postgres
       PGHOST: postgres
@@ -34,7 +35,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-    command: nodemon dist/app.js
+    command: nodemon -L dist/app.js
 
   postgres:
     image: postgres:15.1
