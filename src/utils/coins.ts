@@ -10,7 +10,7 @@ export const getCoins = async () => {
             console.log('Requesting')
 
             // Request top 3000 coins from Coinranking api
-            const response = await fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=3000`, {
+            const response = await fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=2500`, {
                 "method": "GET",
                 "headers": {
                     "x-rapidapi-host": "coinranking1.p.rapidapi.com",

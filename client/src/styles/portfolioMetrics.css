@@ -6,7 +6,7 @@
 
 .portfolio-metrics > div {
     background: var(--color-white);
-    padding: var(--card-padding);
+    padding: 2.2rem 1rem 2.2rem 1rem;
     border-radius: var(--card-border-radius);
     margin-top: 1rem;
     box-shadow: var(--box-shadow);
@@ -18,12 +18,15 @@
     box-shadow: none;
 }
 
-/*.total {
-    max-width: 6.3rem;
-    background-color: red;
+.total {
     overflow: hidden;
     text-overflow: ellipsis;
-}*/
+    font-size: 1rem;
+}
+
+.left {
+    max-width: 90%;
+}
 .portfolio-metrics > div span {
     display: inline-block;
     height: 3.5rem;
@@ -48,7 +51,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
 }
 
 .portfolio-metrics h3 {
@@ -60,11 +62,25 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.2rem;
     align-self: flex-end;
     margin-bottom: 0.4rem;
+    max-width: 45%;
 }
 
+.portfolio-metrics .total-profit-margin div{
+    font-size: 1rem;
+    background: none;
+}
+
+.portfolio-metrics h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+}
+.portfolio-metrics h2:hover {
+    filter: brightness(0%);
+}
 @media screen and (max-width: 1280px) {
     .portfolio-metrics {
         grid-template-columns: repeat(2, 14rem);

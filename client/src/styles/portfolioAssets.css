@@ -5,7 +5,7 @@
 .portfolio-assets table {
     background: var(--color-white);
     width: 100%;
-    border-radius: var(--card-border-radius);
+    border-radius: 1rem;
     padding: var(--card-padding);
     text-align: center;
     box-shadow: var(--box-shadow);
