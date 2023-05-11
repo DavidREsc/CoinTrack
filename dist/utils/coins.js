@@ -18,19 +18,21 @@ const getCoins = () => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             // Check if coins are cached
+            console.log("cache");
             const cachedCoins = yield cache_1.default.get('coins');
             if (cachedCoins)
                 return resolve(JSON.parse(cachedCoins));
             console.log('Requesting');
             // Request top 3000 coins from Coinranking api
-            const response = yield fetch(`https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=2000`, {
+            const response = yield fetch(`https://api.coinranking.com/v2/coins?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h&orderBy=marketCap&orderDirection=desc&limit=2000`, {
                 "method": "GET",
                 "headers": {
-                    "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-                    "x-rapidapi-key": process.env.API
+                    "x-access-token": process.env.API
                 }
             });
+            console.log(response);
             const coinsData = yield response.json();
+            console.log("here");
             const data = {
                 stats: coinsData.data.stats,
                 coins: coinsData.data.coins,

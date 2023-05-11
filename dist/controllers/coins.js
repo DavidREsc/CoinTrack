@@ -59,11 +59,10 @@ exports.getCoins = asyncHandler_1.default((req, res, next) => __awaiter(void 0, 
 }));
 exports.getCoin = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const coinId = req.params.id;
-    const response = yield fetch(`https://coinranking1.p.rapidapi.com/coin/${coinId}?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h`, {
+    const response = yield fetch(`https://api.coinranking.com/v2/coin/${coinId}?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=24h`, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-            "x-rapidapi-key": process.env.API
+            "x-access-token": process.env.API
         }
     });
     const coinData = yield response.json();
@@ -74,11 +73,10 @@ exports.getCoin = asyncHandler_1.default((req, res, next) => __awaiter(void 0, v
 }));
 exports.getCoinHistory = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, period } = req.params;
-    const response = yield fetch(`https://coinranking1.p.rapidapi.com/coin/${id}/history?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=${period}`, {
+    const response = yield fetch(`https://api.coinranking.com/v2/coin/${id}/history?referenceCurrencyUuid=_4s0A3Uuu5ML&timePeriod=${period}`, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-            "x-rapidapi-key": process.env.API
+            "x-access-token": process.env.API
         }
     });
     const data = yield response.json();
