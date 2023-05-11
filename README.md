@@ -1,6 +1,6 @@
 # CoinTrack
-![Sample App Image](./imgs/CoinTrackPortfolio1)
-![Sample App Image 2](./imgs/CoinTrackDetails1)
+![Sample App Image](./imgs/CoinTrackPortfolio1.png)
+![Sample App Image 2](./imgs/CoinTrackDetails1.png)
 
 ## Requirements
 - Docker
