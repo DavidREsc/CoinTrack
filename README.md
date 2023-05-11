@@ -1,4 +1,10 @@
 # CoinTrack
+![Sample App Image](./imgs/CoinTrackPortfolio1)
+![Sample App Image 2](./imgs/CoinTrackDetails1)
+
+## Requirements
+- Docker
+- 
 ## Usage
 
 Clone the repository
