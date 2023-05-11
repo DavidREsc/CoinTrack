@@ -6,7 +6,7 @@ export interface ICoinsData {
 
 export interface ICoinsResponse {
     success: boolean;
-    data: ICoinsData;
+    data: ICoinsData | [];
 }
 
 export interface ClientToServerEvents {

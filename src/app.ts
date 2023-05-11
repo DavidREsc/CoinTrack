@@ -71,6 +71,7 @@ const emitCoins = async () => {
         io.emit('coins', {success: true, data: coins})
     } catch (e) {
         console.log(e)
+        io.emit('coins', {success: false, data: []})
     }
 }
 
