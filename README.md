@@ -4,7 +4,7 @@
 
 ## Requirements
 - Docker
-- 
+
 ## Usage
 
 Clone the repository
