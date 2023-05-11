@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { ILoginData } from '../../types'
 import SignInBtn from '../buttons/SignInBtn'
 import DemoButton from '../buttons/DemoBtn'
+import SourceButton from '../buttons/SourceBtn'
 
 const loginSchema = yup.object().shape({
 	email: yup.string()
@@ -59,6 +60,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 			<div className='auth-submit-btn'>
 				<SignInBtn text={'login'} loading={loading} />
 				<DemoButton text={'demo'} loading={demoLoading} func={onDemoLogin}/>
+				<SourceButton text={'source'}/>
 			</div>
 		</form>
 	)

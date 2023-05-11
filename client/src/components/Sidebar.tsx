@@ -5,6 +5,7 @@ import {IoMdSettings} from 'react-icons/io'
 import {ImNewspaper} from 'react-icons/im'
 import { NavLink } from 'react-router-dom'
 import {BiLogOutCircle} from 'react-icons/bi'
+import {GoMarkGithub} from 'react-icons/go'
 import '../styles/sidebar.css'
 import useAuth from '../hooks/useAuth'
 import { useNavigate, createSearchParams } from 'react-router-dom'
@@ -55,6 +56,10 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             }).toString()}} className='nav-links'>
 						<span className='react-icons'><SiMarketo /></span>
 						<h3>Browse</h3>
+					</NavLink>
+					<NavLink to="https://github.com/DavidREsc/CoinTrack" className='nav-links' target="_blank">
+						<span className='react-icons'><GoMarkGithub /></span>
+						<h3>Source</h3>
 					</NavLink>
 					<button className='side-btn'>
 						<span className='react-icons'><ImNewspaper /></span>

@@ -98,6 +98,18 @@ export const ButtonDemo = styled(Button)({
 	padding: '1rem'
 })
 
+export const ButtonSource = styled(Button)({
+	color: 'hsl(268, 100%, 38%)',
+	border: '1px solid hsl(268, 100%, 38%)',
+	'&:hover': {
+		color: 'hsl(268, 100%, 50%)',
+		border: '1px solid hsl(268, 100%, 50%)',
+		backgroundColor: 'rgba(90, 0, 194, 0.1)'
+	},
+	marginTop: '1rem',
+	padding: '1rem'
+})
+
 export const ButtonDelete = styled(Button)({
 	color: 'var(--color-info-light)',
 	border: '1px solid #ff3333',
