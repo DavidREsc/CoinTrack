@@ -71,7 +71,7 @@ const emitCoins = async () => {
         io.emit('coins', {success: true, data: coins})
     } catch (e) {
         console.log(e)
-        io.emit('coins', {success: false, data: []})
+        io.emit('emit_error', {data: {error: "Latest coin data could not be retrieved", success: false}, status: 500})
     }
 }
 

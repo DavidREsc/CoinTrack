@@ -162,12 +162,18 @@ export interface ICoinsResponse {
     data: ICoinsData;
 }
 
+export interface IEmitErrorResponse {
+    data: {error: string; success: boolean;}
+    status: number;
+}
+
 export interface ServerToClientEvents {
     disconnect: () => void;
 }
 
 export interface ClientToServerEvents {
     coins: (coins: ICoinsResponse) => void;
+    emit_error: (data: IEmitErrorResponse) => void;
 }
 
 export interface IAssetTxn {

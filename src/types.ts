@@ -6,7 +6,12 @@ export interface ICoinsData {
 
 export interface ICoinsResponse {
     success: boolean;
-    data: ICoinsData | [];
+    data: ICoinsData | {error: string;};
+}
+
+export interface IEmitErrorResponse {
+    data: {error: string;     success: boolean;}
+    status: number;
 }
 
 export interface ClientToServerEvents {
@@ -15,6 +20,7 @@ export interface ClientToServerEvents {
 
 export interface ServerToClientEvents {
     coins: (coins: ICoinsResponse) => void;
+    emit_error: (data: IEmitErrorResponse) => void;
 }
 
 export interface ITransactionWithIdData {

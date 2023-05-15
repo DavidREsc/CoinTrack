@@ -94,7 +94,7 @@ const emitCoins = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (e) {
         console.log(e);
-        io.emit('coins', { success: false, data: [] });
+        io.emit('emit_error', { data: { error: "Latest coin data could not be retrieved", success: false }, status: 500 });
     }
 });
 // Get number of socket connections
