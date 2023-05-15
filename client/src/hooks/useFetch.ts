@@ -11,7 +11,7 @@ interface IFetchResponse<T> {
 
 function useFetch<T = unknown>(url: string) {
     const [data, setData] = useState<T | undefined>()
-    const [error, setError] = useState<string>("")
+    const [error, setError] = useState<IError>()
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
@@ -20,8 +20,8 @@ function useFetch<T = unknown>(url: string) {
             try {
                 const response: IFetchResponse<T> = await axios.get(url)
                 setData(response.data.data)
-            } catch (error) {
-                setError((error as IError).data.error)
+            } catch (e: any) {
+                setError(e)
             } finally {
                 setLoading(false)
             }

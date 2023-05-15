@@ -164,6 +164,13 @@ b {
     transform: translateZ(0);
 }
 
+.back-button-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 0.2rem;
+    font-size: 1.2rem;
+}
+
 @keyframes spin {
 0%,
 100% {

@@ -110,6 +110,20 @@ export const ButtonSource = styled(Button)({
 	padding: '1rem'
 })
 
+export const ButtonBack = styled(Button)({
+	color: 'hsl(221, 100%, 50%)',
+	border: '1px solid hsl(221, 100%, 50%)',
+	'&:hover': {
+		color: 'hsl(221, 100%, 50%)',
+		border: '1px solid hsl(221, 100%, 75%)',
+		backgroundColor: 'rgba(0, 81, 255, 0.1)'
+	},
+	marginTop: '1rem',
+	padding: '0.5rem',
+	width: '10rem'
+})
+
+
 export const ButtonDelete = styled(Button)({
 	color: 'var(--color-info-light)',
 	border: '1px solid #ff3333',

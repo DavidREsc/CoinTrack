@@ -7,6 +7,7 @@ import { useState } from "react"
 import { ICoin, TnxData } from "../../types"
 import { useCoinsContext } from "../../contexts/CoinsProvider"
 import RemoveModal from "../forms/RemoveModal"
+import { useNavigate } from "react-router-dom"
 
 interface PflContainerProps {
     portfolio: IPortfolio
@@ -25,6 +26,8 @@ const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
     const {open: addNew, handleOpen: openAddNew, handleClose: closeAddNew} = useModal()
     const {open: remove, handleOpen: openRemove, handleClose: closeRemove} = useModal()
     const {coinMap} = useCoinsContext()
+    const navigate = useNavigate();
+
     
 
     const handleAddTnx = (data: TnxData) => {
@@ -67,6 +70,8 @@ const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
         openRemove()
     }
 
+    const handleViewTransactions = (coin_id: string) => navigate(`${coin_id}/${portfolio.id}`);
+
     return (
         <main>
             <h1>Portfolio</h1>
@@ -74,7 +79,8 @@ const PortfolioContainer: React.FC<PflContainerProps> = (props) => {
             <PortfolioAssets 
                 transactions={portfolio.mergedTransactions} 
                 openSelect={openAddNew} 
-                openRemove={handleRemoveModal}/>
+                openRemove={handleRemoveModal}
+                onViewTransactions={handleViewTransactions}/>
             <AddTnxModal 
                 open={addNew} 
                 onClose={closeAddNew} 

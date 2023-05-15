@@ -1,7 +1,10 @@
 import { RequestHandler, Request } from "express";
 import asyncHandler from "../middleware/asyncHandler";
+import { calculateMetrics } from "../utils/transactionCalculations";
 import db from '../db'
 import { QueryResult } from "pg";
+import { ITransactionWithIdData } from "../types";
+import ErrorResponse from "../utils/errorResponse";
 
 interface IBody {
     user: {
@@ -36,6 +39,9 @@ interface IPortfolioData {
 interface ITransactionsQuery extends QueryResult {
     rows: ITransactionsData[]
 }
+interface ITransactionsWithIdQuery extends QueryResult {
+    rows: ITransactionWithIdData[]
+}
 
 export const getTransactions: RequestHandler = asyncHandler(async (req: ITransactionsRequest, res, next) => {
     interface IData {
@@ -64,6 +70,24 @@ export const getTransactions: RequestHandler = asyncHandler(async (req: ITransac
     res.status(200).json({
         success: true,
         data
+    })
+})
+
+export const getTransactionsWithId: RequestHandler = asyncHandler(async (req: ITransactionsRequest, res, next) => {
+    const {coin_id, portfolio_id} = req.params;
+    const {user_id} = req.body.user;
+    const transactionsQuery: ITransactionsWithIdQuery = await db.query('SELECT transaction_type, transaction_date, coin_price, coin_amount ' + 
+        'FROM users JOIN portfolios ON portfolios.user_id = users.user_id ' +
+        'JOIN transactions ON transactions.portfolio_id = portfolios.portfolio_id ' +
+        'WHERE users.user_id = $1 and portfolios.portfolio_id = $2 and transactions.coin_id= $3', [user_id, portfolio_id, coin_id]);
+    if (!transactionsQuery.rows.length) return next(new ErrorResponse(400, "No transactions found"));
+    const metrics = calculateMetrics(transactionsQuery.rows)
+    res.status(200).json({
+        success: true,
+        data: {
+            metrics,
+            transactions: transactionsQuery.rows
+        }
     })
 })
 

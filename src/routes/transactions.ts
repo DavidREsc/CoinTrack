@@ -5,12 +5,14 @@ import {
     createTransaction, 
     editTransaction, 
     deleteTransaction, 
-    deleteTransactions
+    deleteTransactions,
+    getTransactionsWithId
 } from '../controllers/transactions'
 
 const router = Express.Router()
 
 router.get('/', protect, getTransactions)
+router.get('/:coin_id/:portfolio_id', protect, getTransactionsWithId)
 router.post('/', protect, createTransaction)
 router.patch('/:id', protect, editTransaction)
 router.delete('/:id', protect, deleteTransaction)

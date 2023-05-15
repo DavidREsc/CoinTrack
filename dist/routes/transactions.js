@@ -8,6 +8,7 @@ const protect_1 = require("../middleware/protect");
 const transactions_1 = require("../controllers/transactions");
 const router = express_1.default.Router();
 router.get('/', protect_1.protect, transactions_1.getTransactions);
+router.get('/:coin_id/:portfolio_id', protect_1.protect, transactions_1.getTransactionsWithId);
 router.post('/', protect_1.protect, transactions_1.createTransaction);
 router.patch('/:id', protect_1.protect, transactions_1.editTransaction);
 router.delete('/:id', protect_1.protect, transactions_1.deleteTransaction);

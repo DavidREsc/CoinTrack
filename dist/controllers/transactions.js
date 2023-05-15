@@ -12,9 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTransactions = exports.deleteTransaction = exports.editTransaction = exports.createTransaction = exports.getTransactions = void 0;
+exports.deleteTransactions = exports.deleteTransaction = exports.editTransaction = exports.createTransaction = exports.getTransactionsWithId = exports.getTransactions = void 0;
 const asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
+const transactionCalculations_1 = require("../utils/transactionCalculations");
 const db_1 = __importDefault(require("../db"));
+const errorResponse_1 = __importDefault(require("../utils/errorResponse"));
 exports.getTransactions = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { user_id } = req.body.user;
     const buyTransactions = yield db_1.default.query('SELECT transaction_id, transactions.portfolio_id, transaction_type, coin_id, coin_price, coin_amount, transaction_date ' +
@@ -33,6 +35,24 @@ exports.getTransactions = asyncHandler_1.default((req, res, next) => __awaiter(v
     res.status(200).json({
         success: true,
         data
+    });
+}));
+exports.getTransactionsWithId = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { coin_id, portfolio_id } = req.params;
+    const { user_id } = req.body.user;
+    const transactionsQuery = yield db_1.default.query('SELECT transaction_type, transaction_date, coin_price, coin_amount ' +
+        'FROM users JOIN portfolios ON portfolios.user_id = users.user_id ' +
+        'JOIN transactions ON transactions.portfolio_id = portfolios.portfolio_id ' +
+        'WHERE users.user_id = $1 and portfolios.portfolio_id = $2 and transactions.coin_id= $3', [user_id, portfolio_id, coin_id]);
+    if (!transactionsQuery.rows.length)
+        return next(new errorResponse_1.default(400, "No transactions found"));
+    const metrics = transactionCalculations_1.calculateMetrics(transactionsQuery.rows);
+    res.status(200).json({
+        success: true,
+        data: {
+            metrics,
+            transactions: transactionsQuery.rows
+        }
     });
 }));
 exports.createTransaction = asyncHandler_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

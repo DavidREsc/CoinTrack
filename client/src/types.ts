@@ -4,7 +4,8 @@ export interface IError {
     data: {
         success: boolean;
         error: string;
-    }
+    },
+    status: number;
 }
 
 export interface ILoginData {
@@ -167,4 +168,23 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
     coins: (coins: ICoinsResponse) => void;
+}
+
+export interface IAssetTxn {
+    transaction_type: string;
+    transaction_date: Date;
+    coin_price: string;
+    coin_amount: string;
+    dollar_amount: string;
+}
+
+export interface ITxnMetrics {
+    total_quantity: string;
+    average_buy_price: string;
+    average_sell_price: string;
+}
+
+export interface IAssetTxnResponse {
+    metrics: ITxnMetrics;
+    transactions: IAssetTxn[]
 }

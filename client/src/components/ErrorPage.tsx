@@ -1,19 +1,21 @@
 import {BiErrorAlt} from 'react-icons/bi'
 import ErrorButtons from './buttons/ErrorButtons';
+import { IError } from '../types';
 
 interface ErrorPageProps {
-    error: string;
+    error: IError;
     code: number;
 }
 
 const ErrorPage: React.FC<ErrorPageProps> = ({error, code}) => {
+    console.log(error)
     return (
         <div className='error-page'>
             <div>
                 <span><BiErrorAlt /></span>
-                <h1>{code}</h1>
+                <h1>{error.status}</h1>
             </div>
-            <p>{error}</p>
+            <p>{error.data.error}</p>
             <ErrorButtons />
         </div>
     )

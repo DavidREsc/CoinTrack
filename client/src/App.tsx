@@ -13,10 +13,11 @@ import NotFound from './components/NotFound'
 import LoadingPage from './components/LoadingPage'
 import ErrorPage from './components/ErrorPage'
 import Coin from './components/browse/Coin'
+import TransactionsContainer from './components/transactions/TransactionsContainer'
 
 const App: React.FC = () => {
     const [user, setUser] = useState<string>("")
-    const [error, setError] = useState<string>("")
+    const [error, setError] = useState<IError>()
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
     const {verify} = useAuth()
@@ -30,8 +31,8 @@ const App: React.FC = () => {
             try {
                 const response = await verify()
                 handleUser(response.data.user)
-            } catch (error) {
-                setError((error as IError).data.error)
+            } catch (e: any) {
+                handleUser("")
             } finally {
                 setLoading(false)
             }
@@ -71,6 +72,7 @@ const App: React.FC = () => {
                         <Route path='analytics' element={<Analytics />}/>
                         <Route path='browse' element={<Browse />}/>
                         <Route path='browse/:uuid' element={<Coin />}/>
+                        <Route path='portfolio/:coin_id/:portfolio_id' element={<TransactionsContainer />}/>
                     </Route>
                 </Route>
                 <Route path='*' element={<NotFound />} />

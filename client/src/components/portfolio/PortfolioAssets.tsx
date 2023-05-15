@@ -4,15 +4,18 @@ import {CgMoreVerticalO} from 'react-icons/cg'
 import {RiDeleteBack2Line} from 'react-icons/ri'
 import { ITransaction } from '../../types'
 import { formatValue, lessThan, getAbs } from '../../utils/calculations'
+import { useNavigate } from 'react-router-dom'
 
 interface PflAssetsProps {
     transactions: ITransaction[];
     openSelect: () => void;
     openRemove: (value: string) => void;
+    onViewTransactions: (coin_id: string) => void;
 }
 
 const PortfolioAssets: React.FC<PflAssetsProps> = (props) => {
-    const {transactions, openSelect, openRemove} = props
+    const {transactions, openSelect, openRemove, onViewTransactions} = props
+    const navigate = useNavigate();
     return (
         <div className='portfolio-assets'>
             <div className='assets-top'>
@@ -65,7 +68,7 @@ const PortfolioAssets: React.FC<PflAssetsProps> = (props) => {
                                     </td>
                                     <td>
                                         <span className='span-actions'>
-                                            <button className='more'><CgMoreVerticalO /></button>
+                                            <button className='more' onClick={() => onViewTransactions(t.coin_id)}><CgMoreVerticalO /></button>
                                             <button onClick={() => openRemove(t.coin_id)} className='remove'><RiDeleteBack2Line /></button>
                                         </span>
                                     </td>

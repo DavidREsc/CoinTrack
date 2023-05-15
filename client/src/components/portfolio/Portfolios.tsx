@@ -17,7 +17,7 @@ const Portfolios: React.FC = () => {
     const {useAddTransaction, useRemoveAsset, useCreatePortfolio, useDeletePortfolio} = usePortfolio()
 
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string>("")
+    const [error, setError] = useState<IError>()
     const [data, setData] = useState<IPortfoliosData>()
     const [portfolios, setPortfolios] = useState<TPortfolios>()
     const [portfolioList, setPortfolioList] = useState<IPortfolioData[]>()
@@ -35,9 +35,9 @@ const Portfolios: React.FC = () => {
                 setPortfolios([newPortfolio])
                 setPortfolioList(res.data.data.portfolios)
                 setCurPortfolioId(cur_pfl_id)
-            } catch (error) {
-                console.log(error)
-                setError((error as IError).data.error)
+            } catch (e: any) {
+                console.log(e)
+                setError(e)
             } finally {
                 setLoading(false)
             }
@@ -118,8 +118,6 @@ const Portfolios: React.FC = () => {
             cb(error as IError)
         }
     }
-
-
 
     return (
         loading ? <LoadingPage /> : 
